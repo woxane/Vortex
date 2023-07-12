@@ -9,7 +9,7 @@ def ConfigCheck() :
 
         with open('config.py' , 'w') as File : 
             File.write(f'InstaUsername = "{InstaUsername}"')
-            File.write(f'InstaPass = "{InstaPass}"')
+            File.write(f'\nInstaPass = "{InstaPass}"')
 
 
 
