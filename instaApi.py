@@ -14,7 +14,8 @@ class InstagramAPI :
         # Login
         self.User = Client()
         self.User.login(self.Username , self.Password )
-        
+        print('Login successful!')
+
     def CheckPost(self) : 
         UnreadDirects = self.User.direct_threads(selected_filter = 'unread')
 
@@ -28,5 +29,3 @@ class InstagramAPI :
 
 
 
-Page = InstagramAPI()
-print(list(Page.CheckPost()))
