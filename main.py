@@ -1,6 +1,5 @@
 import os
-from time import sleep
-
+from telegramBot import client
 
 class Main :
 
@@ -11,16 +10,23 @@ class Main :
         import instaApi 
 
         self.Page = instaApi.InstagramAPI()
+
+        self.TelBot = client.Bot()
         
     def CheckDMs(self): 
         # check every second 
         while True :  
             Directs = list(self.Page.CheckPost())
-            print(Directs)
+            
+            # Check that Directs won't be empty
+            if Directs :  
+                for Direct in Directs : 
+                    # Direct[1] is Url , Shema of Direct : (id , url) 
+                    self.SendMedia(Direct[1])
 
-            sleep(1) 
 
-
+    def SendMedia(self , Url) :
+        self.TelBot.SendMessage(Url) 
 
 
 def ConfigCheck() : 
