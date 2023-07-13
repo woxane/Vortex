@@ -3,3 +3,4 @@ __pycache__/*
 telegramBot/data.session
 *.session
 *.session-journal
+*.db
