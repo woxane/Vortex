@@ -27,9 +27,14 @@ class Bot :
         self.Client.start(bot_token = config.Token) 
     
 
-    def SendMessage(self , Url) : 
+    def SendMedia(self , Url) : 
         self.Client.send_file('@BAFSJGAMFSAC' , Url) 
-        
+
+    
+    def SendMessage(self , Message , TelUserId) : 
+        self.Client.send_message(TelUserId , 'Acctivated ! ')
+
+
         
 def EventThread() : 
     Loop = asyncio.new_event_loop()
