@@ -4,3 +4,4 @@ telegramBot/data.session
 *.session
 *.session-journal
 *.db
+TODO.txt
