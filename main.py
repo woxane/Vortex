@@ -14,8 +14,9 @@ class Main :
         self.TelBot = client.Bot()
         
     def CheckDMs(self): 
-        # check every second 
+        # Check every second 
         while True :  
+            # Direct Check
             Directs = list(self.Page.CheckPost())
             
             # Check that Directs won't be empty
@@ -23,10 +24,21 @@ class Main :
                 for Direct in Directs : 
                     # Direct[1] is Url , Shema of Direct : (id , url) 
                     self.SendMedia(Direct[1])
+           
+            # Check Pendings 
+            ActiveTelUserIds= list(self.Page.PendingCheck()) 
+            if ActiveTelUserIds: 
+                for TelUserId in ActiveTelUserIds : 
+                    self.SendMessage('Activated :)' , TelUserId  ) 
+
 
 
     def SendMedia(self , Url) :
-        self.TelBot.SendMessage(Url) 
+        self.TelBot.SendMedia(Url) 
+
+    
+    def SendMessage(self , Message , TelUserId ) :
+        self.TelBot.SendMessage(Message , TelUserId)
 
 
 def ConfigCheck() : 
