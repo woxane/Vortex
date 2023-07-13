@@ -1,6 +1,7 @@
 from telethon.sync import TelegramClient , events
 import sys 
 import logging
+import sqlite3 
 
 # add path 
 sys.path.append('../')
@@ -12,11 +13,40 @@ Client = TelegramClient('data' , config.ApiId , config.ApiHash )
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING) 
 
+# Connect to DataBase
+Connection = sqlite3.connect('../Vortex.db' , isolation_level = None)
+Cursor = Connection.cursor()
+
+
+def ActivateCheck(TelUserId) : 
+    Cursor.execute(f'select Active from Info where TelUserId = {TelUserId}')
+    Active = Cursor.fetchone()[0]
+    return Active 
+
+def UserExist(TelUserId) : 
+    Cursor.execute(f'select TelUserId from Info')
+    # Cursor.fecthall output is like this : [(1,) , (2,)]
+    # with above code i convert it to this : [1,2]
+    UserIdsList = list(map(lambda x : x[0] , Cursor.fetchall()))  
+    return TelUserId in UserIdsList
+
+def AddUser(TelUserId) : 
+    Cursor.execute(f'insert into Info (TelUserId , Access , Active) values ({TelUserId} , 0 , 0)')
 
 
 @Client.on(events.NewMessage(pattern = '/start')) 
-async def Start(event) :  
-    await event.respond("Hi")
+async def Start(event) : 
+
+    if not UserExist(event.message.chat_id) :
+        AddUser(event.message.chat_id) 
+
+    
+    # If telegram account is acctive 
+    if ActivateCheck(event.message.chat_id) : 
+        await event.respond("Hi")
+    
+    else : 
+        await event.respond('Your account is not active . please activate your account with /activate .')
 
 
 
@@ -31,3 +61,4 @@ def RunBot() :
     Client.start(bot_token = config.Token)
     print('Successfully Connected !')
     Client.run_until_disconnected()
+
