@@ -27,6 +27,7 @@ async def Start(event) :
 
 
 
-
-Client.start(bot_token = config.Token)
-Client.run_until_disconnected()
+def RunBot() :
+    Client.start(bot_token = config.Token)
+    print('Successfully Connected !')
+    Client.run_until_disconnected()
