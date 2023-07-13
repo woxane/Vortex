@@ -2,6 +2,7 @@ from telethon.sync import TelegramClient , events
 import sys 
 import logging
 import sqlite3 
+import hashlib
 
 # add path 
 sys.path.append('../')
@@ -33,6 +34,15 @@ def UserExist(TelUserId) :
 def AddUser(TelUserId) : 
     Cursor.execute(f'insert into Info (TelUserId , Access , Active) values ({TelUserId} , 0 , 0)')
 
+def AuthKeyCreator(TelUserId) : 
+    Cursor.execute(f'select AuthKey from Info where TelUserId = {TelUserId}')
+    AuthKey = Cursor.fetchone()[0]
+
+    if not AuthKey : 
+        AuthKey = 'AuthKey$' + hashlib.sha1(str(TelUserId).encode()).hexdigest()
+        Cursor.execute(f'update Info set AuthKey = "{AuthKey}" where TelUserId = {TelUserId}')
+
+    return AuthKey
 
 @Client.on(events.NewMessage(pattern = '/start')) 
 async def Start(event) : 
@@ -46,10 +56,14 @@ async def Start(event) :
         await event.respond("Hi")
     
     else : 
-        await event.respond('Your account is not active . please activate your account with /activate .')
+        await event.respond('Your account is not active .\nplease activate your account with /activate .')
 
 
-
+@Client.on(events.NewMessage(pattern = '/activate'))
+async def Activate(event) :  
+    InstaLink = 'https://www.instagram.com/' + config.InstaUsername
+    AuthKey = AuthKeyCreator(event.message.chat_id)
+    await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
 
 
 
