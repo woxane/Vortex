@@ -24,6 +24,7 @@ class InstagramAPI :
             if Direct.messages[0].item_type == 'clip' :
                 # seen the Direct for not consider the direct again
                 self.User.direct_send_seen(thread_id = Direct.id)
+                self.User.direct_send('Done' , user_ids = [Direct.messages[0].user_id])
                 # give the data like this ( user_id , url ) for authintication we need ... 
                 yield (Direct.id , ''.join(Direct.messages[0].clip.video_url))
 
