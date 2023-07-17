@@ -43,6 +43,15 @@ def AuthKeyCreator(TelUserId) :
         Cursor.execute(f'update Info set AuthKey = "{AuthKey}" where TelUserId = {TelUserId}')
 
     return AuthKey
+def AdminCheck(TelUserId) : 
+    Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
+    Permission = Cursor.fetchone()[0]
+
+    if Permission : 
+        return True
+
+    return False
+
 
 @Client.on(events.NewMessage(pattern = '/start')) 
 async def Start(event) : 
@@ -70,7 +79,16 @@ async def Activate(event) :
         AuthKey = AuthKeyCreator(event.message.chat_id)
         await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
 
+@Client.on(events.NewMessage())
+async def Broadcast(event) : 
+    if AdminCheck(event.message.chat_id) : 
+        Cursor.execute('select TelUserId from Info ')
+        UserIds = list(map(lambda x : x[0] , Cursor.fetchall()))
+        for UserId in UserIds :
+            await Client.send_message(UserId , event.raw_text) 
 
+    else : 
+        await event.respond('Hi')
 
 
 
