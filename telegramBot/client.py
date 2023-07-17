@@ -27,8 +27,8 @@ class Bot :
         self.Client.start(bot_token = config.Token) 
     
 
-    def SendMedia(self , Url) : 
-        self.Client.send_file('@BAFSJGAMFSAC' , Url) 
+    def SendMedia(self , Url , TelUserId) : 
+        self.Client.send_file(TelUserId , Url) 
 
     
     def SendMessage(self , Message , TelUserId) : 

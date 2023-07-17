@@ -15,7 +15,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.WARNING) 
 
 # Connect to DataBase
-Connection = sqlite3.connect('../Vortex.db' , isolation_level = None , check_same_thread = False)
+Connection = sqlite3.connect('Vortex.db' , isolation_level = None , check_same_thread = False )
 Cursor = Connection.cursor()
 
 

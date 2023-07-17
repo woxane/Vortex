@@ -17,7 +17,7 @@ class InstagramAPI :
         print('Login successful!')
 
         # Connect to Database 
-        Connection = sqlite3.connect('Vortex.db' , isolation_level = None , check_same_thread = False)
+        Connection = sqlite3.connect('Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
 
     def CheckPost(self) : 
@@ -25,12 +25,14 @@ class InstagramAPI :
 
         for Direct in UnreadDirects :  
             Message = Direct.messages[0]
+            print(Message.user_id)
             # if the last post in DM is Video  :
             if Message.item_type == 'clip' :
-
+                self.Cursor.execute(f'select TelUserId from Info where InstaUserId = {Message.user_id}') 
+                TelUserId = self.Cursor.fetchone()[0]
                 self.User.direct_send('Done !' , user_ids = [Message.user_id])
                 # give the data like this ( user_id , url ) for authintication we need ... 
-                yield (Direct.id , ''.join(Message.clip.video_url))
+                yield (TelUserId , ''.join(Message.clip.video_url))
             
             
             # seen the Direct for not consider the direct again
@@ -59,7 +61,7 @@ class InstagramAPI :
         # Check if the AuthKey is correct 
         if Message.text in AuthKeys :
             TelUserId = TelUserIds[AuthKeys.index(Message.text)]
-            self.Cursor.execute(f'update Info set InstaUserId = {Message.user_id} where TelUserId = {TelUserId} ')
+            self.Cursor.execute(f'update Info set InstaUserId = {Message.user_id} , Active = 1 where TelUserId = {TelUserId} ')
             return TelUserId
 
 
