@@ -46,14 +46,10 @@ class InstagramAPI :
                         # If the slide is photo 
                         Type = Slide.media_type 
                         if Type == 1 :  
-                            ThumbnailUrl = ''.join(Slide.thumbnail_url)
-                            if ThumbnailUrl :
-                                yield (TelUserId[0] , ThumbnailUrl ,  'test')
+                            yield (TelUserId[0] , ''.join(Slide.thumbnail_url),  Caption)
 
                         elif Type == 2 : 
-                            VideoUrl = ''.join(Slide.video_url)
-                            if VideoUrl : 
-                                yield (TelUserId[0] , VideoUrl , 'test') 
+                            yield (TelUserId[0] , ''.join(Slide.video_url) , Caption) 
 
                 
                 self.User.direct_send('Done !' , user_ids = [Message.user_id])
