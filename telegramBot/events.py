@@ -61,9 +61,14 @@ async def Start(event) :
 
 @Client.on(events.NewMessage(pattern = '/activate'))
 async def Activate(event) :  
-    InstaLink = 'https://www.instagram.com/' + config.InstaUsername
-    AuthKey = AuthKeyCreator(event.message.chat_id)
-    await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
+
+    if ActivateCheck(event.message.chat_id) : 
+        await event.respond('You are already Activated ! ')
+            
+    else :
+        InstaLink = 'https://www.instagram.com/' + config.InstaUsername
+        AuthKey = AuthKeyCreator(event.message.chat_id)
+        await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
 
 
 

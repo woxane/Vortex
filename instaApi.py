@@ -29,11 +29,14 @@ class InstagramAPI :
             # if the last post in DM is Video  :
             if Message.item_type == 'clip' :
                 self.Cursor.execute(f'select TelUserId from Info where InstaUserId = {Message.user_id}') 
-                TelUserId = self.Cursor.fetchone()[0]
-                self.User.direct_send('Done !' , user_ids = [Message.user_id])
-                # give the data like this ( user_id , url ) for authintication we need ... 
-                yield (TelUserId , ''.join(Message.clip.video_url))
-            
+                TelUserId = self.Cursor.fetchone()
+                if TelUserId : 
+                    self.User.direct_send('Done !' , user_ids = [Message.user_id])
+                    # give the data like this ( user_id , url ) for authintication we need ... 
+                    yield (TelUserId[0] , ''.join(Message.clip.video_url))
+                
+                else : 
+                    self.User.direct_send('Your Account is not Activated !!' , user_ids = [Message.user_id])
             
             # seen the Direct for not consider the direct again
             self.User.direct_send_seen(thread_id = Direct.id)
