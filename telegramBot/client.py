@@ -28,7 +28,7 @@ class Bot :
     
 
     def SendMedia(self , Url , TelUserId , Caption) : 
-        self.Client.send_file(TelUserId , Url , caption=Caption) 
+        self.Client.send_file(TelUserId , Url , caption=Caption , force_document=False) 
 
     
     def SendMessage(self , Message , TelUserId) : 

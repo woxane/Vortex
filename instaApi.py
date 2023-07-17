@@ -26,18 +26,41 @@ class InstagramAPI :
         for Direct in UnreadDirects :  
             Message = Direct.messages[0]
             print(Message.user_id)
-            # if the last post in DM is Video  :
-            if Message.item_type == 'clip' :
-                self.Cursor.execute(f'select TelUserId from Info where InstaUserId = {Message.user_id}') 
-                TelUserId = self.Cursor.fetchone()
-                if TelUserId : 
-                    self.User.direct_send('Done !' , user_ids = [Message.user_id])
-                    # give the data like this ( user_id , url , caption) for authintication we need ... 
-                    yield (TelUserId[0] , ''.join(Message.clip.video_url) , Message.clip.caption_text )
-                
-                else : 
-                    self.User.direct_send('Your Account is not Activated !!' , user_ids = [Message.user_id])
+
+            self.Cursor.execute(f'select TelUserId from Info where InstaUserId = {Message.user_id}') 
+            TelUserId = self.Cursor.fetchone()
             
+            if TelUserId : 
+                # if the last post in DM is Video  :
+                if Message.item_type == 'clip' :
+                        # give the data like this ( user_id , url , caption) for authintication we need ... 
+                        yield (TelUserId[0] , ''.join(Message.clip.video_url) , Message.clip.caption_text )
+           
+
+                elif Message.item_type == 'xma_media_share' : 
+                    VideoUrl = ''.join(Message.xma_share.video_url)
+                    VideoPk = self.User.media_pk_from_url(VideoUrl)
+                    VideoInfo = self.User.media_info(VideoPk)
+                    Caption = VideoInfo.caption_text
+                    for Slide in VideoInfo.resources : 
+                        # If the slide is photo 
+                        Type = Slide.media_type 
+                        if Type == 1 :  
+                            ThumbnailUrl = ''.join(Slide.thumbnail_url)
+                            if ThumbnailUrl :
+                                yield (TelUserId[0] , ThumbnailUrl ,  'test')
+
+                        elif Type == 2 : 
+                            VideoUrl = ''.join(Slide.video_url)
+                            if VideoUrl : 
+                                yield (TelUserId[0] , VideoUrl , 'test') 
+
+                
+                self.User.direct_send('Done !' , user_ids = [Message.user_id])
+
+            else : 
+                self.User.direct_send('Your Account is not Activated !!' , user_ids = [Message.user_id])
+
             # seen the Direct for not consider the direct again
             self.User.direct_send_seen(thread_id = Direct.id)
 
