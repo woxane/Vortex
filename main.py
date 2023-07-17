@@ -23,7 +23,7 @@ class Main :
             if Directs :  
                 for Direct in Directs : 
                     # Direct[1] is Url , Shema of Direct : (id , url) 
-                    self.SendMedia(Direct[1] ,Direct[0]) 
+                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
            
             # Check Pendings 
             ActiveTelUserIds= list(self.Page.PendingCheck()) 
@@ -33,8 +33,8 @@ class Main :
 
 
 
-    def SendMedia(self , Url , TelUserId) :
-        self.TelBot.SendMedia(Url , TelUserId) 
+    def SendMedia(self , Url , TelUserId , Caption ) :
+        self.TelBot.SendMedia(Url , TelUserId , Caption) 
 
     
     def SendMessage(self , Message , TelUserId ) :

@@ -32,8 +32,8 @@ class InstagramAPI :
                 TelUserId = self.Cursor.fetchone()
                 if TelUserId : 
                     self.User.direct_send('Done !' , user_ids = [Message.user_id])
-                    # give the data like this ( user_id , url ) for authintication we need ... 
-                    yield (TelUserId[0] , ''.join(Message.clip.video_url))
+                    # give the data like this ( user_id , url , caption) for authintication we need ... 
+                    yield (TelUserId[0] , ''.join(Message.clip.video_url) , Message.clip.caption_text )
                 
                 else : 
                     self.User.direct_send('Your Account is not Activated !!' , user_ids = [Message.user_id])
