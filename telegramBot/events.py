@@ -79,13 +79,13 @@ async def Activate(event) :
         AuthKey = AuthKeyCreator(event.message.chat_id)
         await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
 
-@Client.on(events.NewMessage())
+@Client.on(events.NewMessage(pattern = '/sendall'))
 async def Broadcast(event) : 
     if AdminCheck(event.message.chat_id) : 
         Cursor.execute('select TelUserId from Info ')
         UserIds = list(map(lambda x : x[0] , Cursor.fetchall()))
         for UserId in UserIds :
-            await Client.send_message(UserId , event.raw_text) 
+            await Client.send_message(UserId , event.raw_text[8:]) 
 
     else : 
         await event.respond('Hi')
