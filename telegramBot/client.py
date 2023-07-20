@@ -32,7 +32,7 @@ class Bot :
 
     
     def SendMessage(self , Message , TelUserId) : 
-        self.Client.send_message(TelUserId , 'Acctivated ! ')
+        self.Client.send_message(TelUserId , Message)
 
 
         
