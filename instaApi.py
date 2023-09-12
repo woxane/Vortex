@@ -1,6 +1,7 @@
 from instagrapi import Client
 import config
 import sqlite3
+from os.path import exists
 
 class InstagramAPI :
 
@@ -10,15 +11,24 @@ class InstagramAPI :
         self.Username = config.InstaUsername
         self.Password = config.InstaPass 
         
-
-        # Login
-        self.User = Client()
-        self.User.login(self.Username , self.Password )
-        print('Login successful!')
-
+        self.Login()
+        
         # Connect to Database 
         Connection = sqlite3.connect('Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
+
+    def Login(self) : 
+        self.User = Client() 
+
+        if exists('dump.json') : 
+            self.User.load_settings('dump.json') 
+
+        else : 
+            self.User.login(config.InstaUsername , config.InstaPass)
+            self.User.dump_settings('dump.json')
+
+        print('Login successful')
+
 
     def CheckPost(self) : 
         UnreadDirects = self.User.direct_threads(selected_filter = 'unread')
@@ -86,6 +96,6 @@ class InstagramAPI :
             self.Cursor.execute(f'update Info set InstaUserId = {Message.user_id} , Active = 1 where TelUserId = {TelUserId} ')
             return TelUserId
 
-
+    
     
 
