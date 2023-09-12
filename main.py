@@ -15,22 +15,27 @@ class Main :
         
     def CheckDMs(self): 
         # Check every second 
-        while True :  
-            # Direct Check
-            Directs = list(self.Page.CheckPost())
-            
-            # Check that Directs won't be empty
-            if Directs :  
-                for Direct in Directs : 
-                    # Direct[1] is Url , Shema of Direct : (id , url) 
-                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
-           
-            # Check Pendings 
-            ActiveTelUserIds= list(self.Page.PendingCheck()) 
-            if ActiveTelUserIds: 
-                for TelUserId in ActiveTelUserIds : 
-                    self.SendMessage('Activated :)' , TelUserId  ) 
-
+        try : 
+            while True :  
+                # Direct Check
+                Directs = list(self.Page.CheckPost())
+                
+                # Check that Directs won't be empty
+                if Directs :  
+                    for Direct in Directs : 
+                        # Direct[1] is Url , Shema of Direct : (id , url) 
+                        self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+               
+                # Check Pendings 
+                ActiveTelUserIds= list(self.Page.PendingCheck()) 
+                if ActiveTelUserIds: 
+                    for TelUserId in ActiveTelUserIds : 
+                        self.SendMessage('Activated :)' , TelUserId  ) 
+        except : 
+            print('Log out...')
+            print('Try to log in... ')
+            self.Page.Login()
+            self.CheckDms()
 
 
     def SendMedia(self , Url , TelUserId , Caption ) :
