@@ -4,8 +4,7 @@ from telegramBot import client
 class Main :
 
     def __init__(self): 
-        ### IMPORTANT : this comment section is just for test in vercel host , do not use this version !
-        #ConfigCheck() 
+        ConfigCheck() 
     
         # First check for config because in instaApi we import config 
         import instaApi 

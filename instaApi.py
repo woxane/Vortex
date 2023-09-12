@@ -2,21 +2,14 @@ from instagrapi import Client
 import config
 import sqlite3
 
-from os import environ
-
 class InstagramAPI :
 
     def __init__(self) : 
         
-        ### IMPORTANT : THESE COMMENT SECTION IS FOR VERCEL TEST
         ## Initialize Arrays
-        #self.Username = config.InstaUsername
-        #self.Password = config.InstaPass 
+        self.Username = config.InstaUsername
+        self.Password = config.InstaPass 
         
-        self.Username = environ.get("InstaUsername")
-        self.Password = environ.get("InstaPass")
-
-    
 
         # Login
         self.User = Client()
