@@ -1,16 +1,16 @@
 from telethon.sync import TelegramClient , events
-import sys 
 import logging
 import sqlite3 
 import hashlib
+import os 
+from dotenv import load_dotenv
 
-# add path 
-sys.path.append('../')
+# Using ./.env File
+load_dotenv()
 
-import config
-
-
-Client = TelegramClient('data' , config.ApiId , config.ApiHash )
+# os.getenv output is passing string var / 
+# so for ApiId we must to convert it to integer
+Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING) 
 
@@ -75,7 +75,7 @@ async def Activate(event) :
         await event.respond('You are already Activated ! ')
             
     else :
-        InstaLink = 'https://www.instagram.com/' + config.InstaUsername
+        InstaLink = 'https://www.instagram.com/' + os.getenv('InstaUsername')
         AuthKey = AuthKeyCreator(event.message.chat_id)
         await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
 
@@ -95,7 +95,7 @@ async def Broadcast(event) :
 
 
 def RunBot() :
-    Client.start(bot_token = config.Token)
+    Client.start(bot_token = os.getenv('Token'))
     print('Successfully Connected !')
     Client.run_until_disconnected()
 
