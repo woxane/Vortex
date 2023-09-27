@@ -1,15 +1,15 @@
 from instagrapi import Client
-import config
 import sqlite3
-from os.path import exists
+import os 
+from dotenv import load_dotenv
 
 class InstagramAPI :
 
     def __init__(self) : 
         
         ## Initialize Arrays
-        self.Username = config.InstaUsername
-        self.Password = config.InstaPass 
+        self.Username = os.getenv('InstaUsername')
+        self.Password = os.getenv('InstaPass')
         
         self.Login()
         
@@ -17,14 +17,17 @@ class InstagramAPI :
         Connection = sqlite3.connect('Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
 
+        # Using .env File
+        load_dotenv()
+
     def Login(self) : 
         self.User = Client() 
 
-        if exists('dump.json') : 
+        if os.path.exists('dump.json') : 
             self.User.load_settings('dump.json') 
 
         else : 
-            self.User.login(config.InstaUsername , config.InstaPass)
+            self.User.login(self.Username, self.Password)
             self.User.dump_settings('dump.json')
 
         print('Login successful')
