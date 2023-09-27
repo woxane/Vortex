@@ -1,9 +1,13 @@
 import os
+from dotenv import load_dotenv
 from telegramBot import client
 
 class Main :
 
     def __init__(self): 
+        #Use .env file 
+        load_dotenv()
+
         ConfigCheck() 
     
         # First check for config because in instaApi we import config 
@@ -47,19 +51,19 @@ class Main :
 
 
 def ConfigCheck() : 
-    if not os.path.exists('config.py') : 
+    if not os.path.exists('.env') : 
         InstaUsername = input('Enter your Instagram Username : ')
         InstaPass = input('Enter your Instagram Password : ')
         ApiId = int(input('Enter your Telegram Bot Api Id : '))
         ApiHash = input('Enter you Telegram Bot Api Hash : ' )
         Token = input('Enter you Telegram Bot Token : ')
         # Writing config file 
-        with open('config.py' , 'w') as File : 
-            File.write(f'InstaUsername = "{InstaUsername}"')
-            File.write(f'\nInstaPass = "{InstaPass}"')
-            File.write(f'\nApiId = "{ApiId}"')
-            File.write(f'\nApiHash = "{ApiHash}"')
-            File.write(f'\nToken = "{Token}"')
+        with open('.env' , 'w') as File : 
+            File.write(f'InstaUsername={InstaUsername}')
+            File.write(f'\nInstaPass={InstaPass}')
+            File.write(f'\nApiId={ApiId}')
+            File.write(f'\nApiHash={ApiHash}')
+            File.write(f'\nToken={Token}')
 
 
 if __name__ == '__main__' : 
