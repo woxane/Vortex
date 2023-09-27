@@ -52,8 +52,19 @@ def AdminCheck(TelUserId) :
 
     return False
 
+def JoinCheck(TelUserId) : 
+    # Check if the user is a member or not / 
+    # if it's not a member , get_permissions raise an error 
 
-@Client.on(events.NewMessage(pattern = '/start')) 
+    try : 
+        Client.get_permissions('VortexSaver' , TelUserId) 
+        return True 
+
+    except : 
+        return False 
+
+
+@Client.on(events.NewMessage(pattern = '/start' , func = lambda event : JoinCheck(event.message.id))) 
 async def Start(event) : 
 
     if not UserExist(event.message.chat_id) :
@@ -68,7 +79,7 @@ async def Start(event) :
         await event.respond('Your account is not active .\nplease activate your account with /activate .')
 
 
-@Client.on(events.NewMessage(pattern = '/activate'))
+@Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : JoinCheck(event.message.id)))
 async def Activate(event) :  
 
     if ActivateCheck(event.message.chat_id) : 
