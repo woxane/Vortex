@@ -27,7 +27,7 @@ class Main :
                 # Check that Directs won't be empty
                 if Directs :  
                     for Direct in Directs : 
-                        # Direct[1] is Url , Shema of Direct : (id , url) 
+                        # Direct[1] is Url , Shema of Direct : (id , url , caption) 
                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
                
                 # Check Pendings 
