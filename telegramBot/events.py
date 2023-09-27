@@ -1,4 +1,4 @@
-from telethon.sync import TelegramClient , events
+from telethon.sync import TelegramClient , events , Button
 import logging
 import sqlite3 
 import hashlib
@@ -59,7 +59,6 @@ async def JoinCheck(TelUserId) :
 
     try : 
         await Client.get_permissions('VortexSaver' , TelUserId) 
-        print('here')
         return True 
 
     except : 
@@ -82,7 +81,8 @@ async def Start(event) :
             await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
     else : 
-        await event.respond('For using the bot you must be join to our channel :\n@VortexSaver')
+        JoinButton = Button.url("Vortex Saver 🌪", url='https://t.me/VortexSaver')
+        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = [[JoinButton]])
 
 @Client.on(events.NewMessage(pattern = '/activate' ))
 async def Activate(event) :  
@@ -98,7 +98,8 @@ async def Activate(event) :
             await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
     
     else : 
-        await event.respond('For using the bot you must be join to our channel :\n@VortexSaver')
+        JoinButton = Button.url("Vortex Saver 🌪", url='https://t.me/VortexSaver')
+        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = [[JoinButton]])
 
 
 @Client.on(events.NewMessage(pattern = '/sendall'))
