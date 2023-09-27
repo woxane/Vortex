@@ -4,6 +4,7 @@ import sqlite3
 import hashlib
 import os 
 from dotenv import load_dotenv
+import asyncio
 
 # Using ./.env File
 load_dotenv()
@@ -52,43 +53,53 @@ def AdminCheck(TelUserId) :
 
     return False
 
-def JoinCheck(TelUserId) : 
+async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
     # if it's not a member , get_permissions raise an error 
 
     try : 
-        Client.get_permissions('VortexSaver' , TelUserId) 
+        await Client.get_permissions('VortexSaver' , TelUserId) 
+        print('here')
         return True 
 
     except : 
         return False 
 
-
-@Client.on(events.NewMessage(pattern = '/start' , func = lambda event : JoinCheck(event.message.id))) 
+@Client.on(events.NewMessage(pattern = '/start' )) 
 async def Start(event) : 
+    # Check if user is join our channel or not  
+    if await JoinCheck(event.message.chat_id) : 
+            
+        if not UserExist(event.message.chat_id) :
+            AddUser(event.message.chat_id) 
 
-    if not UserExist(event.message.chat_id) :
-        AddUser(event.message.chat_id) 
-
-    
-    # If telegram account is acctive 
-    if ActivateCheck(event.message.chat_id) : 
-        await event.respond("Hi")
+        
+        # If telegram account is acctive 
+        if ActivateCheck(event.message.chat_id) : 
+            await event.respond("Hi")
+        
+        else : 
+            await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
     else : 
-        await event.respond('Your account is not active .\nplease activate your account with /activate .')
+        await event.respond('For using the bot you must be join to our channel :\n@VortexSaver')
 
-
-@Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : JoinCheck(event.message.id)))
+@Client.on(events.NewMessage(pattern = '/activate' ))
 async def Activate(event) :  
+    # Check if user is join our channel or not  
+    if await JoinCheck(event.message.chat_id) :
 
-    if ActivateCheck(event.message.chat_id) : 
-        await event.respond('You are already Activated ! ')
-            
-    else :
-        InstaLink = 'https://www.instagram.com/' + os.getenv('InstaUsername')
-        AuthKey = AuthKeyCreator(event.message.chat_id)
-        await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
+        if ActivateCheck(event.message.chat_id) : 
+            await event.respond('You are already Activated ! ')
+                
+        else :
+            InstaLink = 'https://www.instagram.com/' + os.getenv('InstaUsername')
+            AuthKey = AuthKeyCreator(event.message.chat_id)
+            await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
+    
+    else : 
+        await event.respond('For using the bot you must be join to our channel :\n@VortexSaver')
+
 
 @Client.on(events.NewMessage(pattern = '/sendall'))
 async def Broadcast(event) : 
