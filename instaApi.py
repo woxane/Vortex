@@ -81,7 +81,10 @@ class InstagramAPI :
             
             if Message.item_type == 'text' : 
                 # Check if the text is AuthKey 
-                # If the AuthKey was invalid don't seen it 
+                # If the AuthKey was invalid don't seen it  / 
+                # thats because if anyone send invalid AuthKey / 
+                # could send it again cause this function / 
+                # just see those pending direct for auth key 
                 TelUserId = self.AuthKeyCheck(Message)
                 # Here instead of True or False we get Telegram User Id from AuthKeyCheck function 
                 # and check it if it is empty or not 
