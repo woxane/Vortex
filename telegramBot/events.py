@@ -92,6 +92,7 @@ async def JoinCheck(TelUserId) :
 
 async def AdminPanel(event , Message) : 
     ButtonMarkup = event.client.build_reply_markup([
+        [Button.text('Send All 📢')],
         [Button.text('New Admin 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
         [Button.text('Ban User 🚫') , Button.text('Users Numbers 📊')] ,
         [Button.text('Home 🏠')]
@@ -150,16 +151,15 @@ async def Activate(event) :
         await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = [[JoinButton]])
 
 
-@Client.on(events.NewMessage(pattern = '/sendall'))
+@Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : AdminCheck(event.message.chat_id)))
 async def Broadcast(event) : 
-    if AdminCheck(event.message.chat_id) : 
-        Cursor.execute('select TelUserId from Info ')
-        UserIds = list(map(lambda x : x[0] , Cursor.fetchall()))
-        for UserId in UserIds :
-            await Client.send_message(UserId , event.raw_text[8:]) 
+    Message = await GetReply('Send your message ' , event.message.chat_id)
 
-    else : 
-        await event.respond('Hi')
+    Cursor.execute('select TelUserId from Info ')
+    UserIds = list(map(lambda x : x[0] , Cursor.fetchall()))
+    for UserId in UserIds :
+        await Client.send_message(UserId , '**Admin Message : \n**' + Message ) 
+
 
 # These above patter need to be admin 
 @Client.on(events.NewMessage(pattern = 'Channel Sponser 🚀'  , func = lambda event : AdminCheck(event.message.chat_id))) 
