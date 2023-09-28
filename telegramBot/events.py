@@ -44,6 +44,7 @@ def AuthKeyCreator(TelUserId) :
         Cursor.execute(f'update Info set AuthKey = "{AuthKey}" where TelUserId = {TelUserId}')
 
     return AuthKey
+
 def AdminCheck(TelUserId) : 
     Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
     Permission = Cursor.fetchone()[0]
@@ -64,10 +65,27 @@ async def JoinCheck(TelUserId) :
     except : 
         return False 
 
+async def AdminPanel(event) : 
+    ButtonMarkup = event.client.build_reply_markup([
+        [Button.text('New Admin 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
+        [Button.text('Ban User 🚫') , Button.text('Users Numbers 📊')] ,
+        [Button.text('Home 🏠')]
+        ])
+
+    await event.respond('Hey to our admin' , buttons = ButtonMarkup)
+
+
+
+
 @Client.on(events.NewMessage(pattern = '/start' )) 
 async def Start(event) : 
+    
+    if AdminCheck(event.message.chat_id) : 
+        await AdminPanel(event)  
+
+
     # Check if user is join our channel or not  
-    if await JoinCheck(event.message.chat_id) : 
+    elif await JoinCheck(event.message.chat_id) : 
             
         if not UserExist(event.message.chat_id) :
             AddUser(event.message.chat_id) 
@@ -76,7 +94,7 @@ async def Start(event) :
         # If telegram account is acctive 
         if ActivateCheck(event.message.chat_id) : 
             await event.respond("Hi")
-        
+                
         else : 
             await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
