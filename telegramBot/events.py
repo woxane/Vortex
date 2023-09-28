@@ -218,6 +218,14 @@ async def SponserStatus(event) :
 async def Home(event) : 
     await AdminPanel(event , 'Back To Home 🔙') 
 
+
+@Client.on(events.NewMessage(pattern = 'Users Numbers 📊'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def UserCount(event) : 
+    Cursor.execute('select count(*) from Info') 
+    UserCount = Cursor.fetchone()[0]
+    await event.respond(f"We've Had **{UserCount}** Users Until Now")
+
+
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
     global ChannelNames
