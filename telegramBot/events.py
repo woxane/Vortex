@@ -201,6 +201,21 @@ async def SponserRemove(event) :
 
     await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
 
+@Client.on(events.CallbackQuery())
+async def InlineRemove(event) :
+    global ChannelNames
+    UserSelection = event.data.decode()
+    
+    if UserSelection in ChannelNames : 
+        # delete and pass the data
+        ChannelNames = SponserRemover(UserSelection)  
+        await event.answer('Removed ❌') 
+        await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
+    
+    # none of them means it's Done 
+    else : 
+        await event.edit('Successfully Completed 🫡')
+         
 
 
 
