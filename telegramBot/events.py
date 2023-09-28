@@ -56,6 +56,16 @@ def AdminCheck(TelUserId) :
 
     return False
 
+def ButtonInlineMaker(DataList) :
+    # i want to inline buttons seprate two by two for this : 
+    
+    Buttons = list(map(lambda DataIndex : [Button.text(DataList[DataIndex]) , Button.text(DataList[DataIndex + 1])] \
+            if DataIndex + 1 != len(DataList) else [Button.text(DataList[DataIndex])] ,\
+            range(len(DataList))[::2] ))
+
+    return Buttons
+    
+
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
     # if it's not a member , get_permissions raise an error 
