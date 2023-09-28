@@ -74,7 +74,11 @@ async def AdminPanel(event) :
 
     await event.respond('Hey to our admin' , buttons = ButtonMarkup)
 
-
+async def GetReply(Message , TelUserId) :
+    async with Cilent.conversation(TelUserId) as Chat : 
+        await Chat.send_message(Message , buttons = Button.force_reply()) 
+        
+    return await conv.get_reply()
 
 
 @Client.on(events.NewMessage(pattern = '/start' )) 
@@ -142,7 +146,6 @@ async def Sponser(event) :
 
     await event.respond('Ok Sir , you want to Add Or Remove' , buttons = ButtonMarkup)
     
-
 
 
 
