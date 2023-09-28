@@ -64,7 +64,7 @@ def ButtonInlineMaker(DataList) :
             range(len(DataList))[::2] ))
    
     # this is for i want the done button be big and seprated
-    Buttons.append(Button.inline('Done ✅'))
+    Buttons.append([Button.inline('Done ✅')])
 
     return Buttons
     
