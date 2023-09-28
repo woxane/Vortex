@@ -68,6 +68,12 @@ def ButtonInlineMaker(DataList) :
 
     return Buttons
 
+def SponsersData() : 
+    with open('SponsersData.json' , 'r') as File : 
+        Data = json.load(File)['Channels']
+
+    return Data
+
 def SponserRemover(Name ) : 
     with open('SponsersData.json' , 'r' ) as File : 
         Datas = json.load(File)
