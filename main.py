@@ -73,7 +73,7 @@ def ConfigCheck() :
         print('There is not any SponsersData.json File Ready to create ... ')
         # Creating empy json file 
         with open('SponsersData.json' , 'w') as File : 
-           json.dump({} , File)
+            json.dump({'Channels' : []} , File)
         
         print('Done')
 
