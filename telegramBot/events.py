@@ -135,7 +135,9 @@ async def Broadcast(event) :
 @Client.on(events.NewMessage(pattern = 'Channel Sponser 🚀'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def Sponser(event) : 
     ButtonMarkup = event.client.build_reply_markup([
-        [Button.text('Add 🆕') , Button.text('Remove 🚮')]
+        [Button.text('Status ℹ️')],
+        [Button.text('Add 🆕') , Button.text('Remove 🚮')] , 
+        [Button.text('Home 🏠')]
         ])
 
     await event.respond('Ok Sir , you want to Add Or Remove' , buttons = ButtonMarkup)
