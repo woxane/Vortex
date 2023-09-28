@@ -201,6 +201,21 @@ async def SponserRemove(event) :
 
     await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
 
+
+@Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def SponserStatus(event) : 
+    with open('SponsersData.json' , 'r') as File : 
+        Datas = json.load(File)
+
+    Now = datetime.now()  
+    Status = list(map(lambda Channel : f'[{Channel["Name"]}]({Channel["Link"]})  :\n\
+            **{(Now - datetime.fromisoformat(Channel["Date"])).days} Day and {(Now - datetime.fromisoformat(Channel["Date"])).seconds // 3600} Hours Passed**'\
+            , Datas['Channels']))
+
+    await event.respond('\n'.join(Status))
+
+
+
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
     global ChannelNames
