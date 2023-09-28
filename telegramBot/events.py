@@ -72,11 +72,12 @@ def SponserRemover(Name ) :
     with open('SponsersData.json' , 'r' ) as File : 
         Datas = json.load(File)
 
-    Datas = list(filter(lambda Channels : Channels['Name'] != Name , Datas['Channels']))
+    Datas = {'Channels' : list(filter(lambda Channels : Channels['Name'] != Name , Datas['Channels']))}
 
     with open('SponsersData.json' , 'w' ) as File : 
         json.dump(Datas , File , indent = 4)
     
+    return list(map(lambda Channels : Channels['Name'] , Datas['Channels']))
 
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
