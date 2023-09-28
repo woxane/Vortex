@@ -5,6 +5,8 @@ import hashlib
 import os 
 from dotenv import load_dotenv
 import asyncio
+from datetime import datetime
+import json
 
 # Using ./.env File
 load_dotenv()
@@ -75,11 +77,12 @@ async def AdminPanel(event) :
     await event.respond('Hey to our admin' , buttons = ButtonMarkup)
 
 async def GetReply(Message , TelUserId) :
-    async with Cilent.conversation(TelUserId) as Chat : 
+    async with Client.conversation(TelUserId) as Chat : 
         await Chat.send_message(Message , buttons = Button.force_reply()) 
         
-    return await conv.get_reply()
+        return (await Chat.get_reply()).text
 
+    
 
 @Client.on(events.NewMessage(pattern = '/start' )) 
 async def Start(event) : 
@@ -147,10 +150,25 @@ async def Sponser(event) :
     await event.respond('Ok Sir , you want to Add Or Remove' , buttons = ButtonMarkup)
     
 
+@Client.on(events.NewMessage(pattern = 'Add 🆕'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def SponserAdd(event) : 
+
+    ChannelName = await GetReply('Enter the name of the channel . ' , event.message.chat_id)
+    ChannelLink = await GetReply('Enter link of the channel . ' , event.message.chat_id)
+    
+    with open('SponsersData.json' , 'r' ) as File : 
+        Data = json.load(File)
+
+    Data['Channels'].append({'Name' : ChannelName , 'Link' : ChannelLink , 'Date' : datetime.now().isoformat()})
+    
+    with open('SponsersData.json' , 'w') as File : 
+        json.dump(Data  , File , indent = 4)
+
+    await event.respond('Channel Successfully Added ✅')
 
 
 def RunBot() :
     Client.start(bot_token = os.getenv('Token'))
     print('Successfully Connected !')
     Client.run_until_disconnected()
-
+    
