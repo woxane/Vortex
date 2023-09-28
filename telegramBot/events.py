@@ -90,14 +90,14 @@ async def JoinCheck(TelUserId) :
     except : 
         return False 
 
-async def AdminPanel(event) : 
+async def AdminPanel(event , Message) : 
     ButtonMarkup = event.client.build_reply_markup([
         [Button.text('New Admin 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
         [Button.text('Ban User 🚫') , Button.text('Users Numbers 📊')] ,
         [Button.text('Home 🏠')]
         ])
 
-    await event.respond('Hey to our admin' , buttons = ButtonMarkup)
+    await event.respond(Message , buttons = ButtonMarkup)
 
 async def GetReply(Message , TelUserId) :
     async with Client.conversation(TelUserId) as Chat : 
@@ -111,7 +111,7 @@ async def GetReply(Message , TelUserId) :
 async def Start(event) : 
     
     if AdminCheck(event.message.chat_id) : 
-        await AdminPanel(event)  
+        await AdminPanel(event , 'Hey Admin 🤵')  
 
 
     # Check if user is join our channel or not  
@@ -214,7 +214,9 @@ async def SponserStatus(event) :
 
     await event.respond('\n'.join(Status))
 
-
+@Client.on(events.NewMessage(pattern = 'Home 🏠'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def Home(event) : 
+    await AdminPanel(event , 'Back To Home 🔙') 
 
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
