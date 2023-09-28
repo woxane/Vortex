@@ -136,8 +136,9 @@ async def Start(event) :
             await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
     else : 
-        JoinButton = Button.url("Vortex Saver 🌪", url='https://t.me/VortexSaver')
-        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = [[JoinButton]])
+        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
+        UrlButtons = ButtonMaker(ChannelsLink , Button.url)
+        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/activate' ))
 async def Activate(event) :  
@@ -153,8 +154,9 @@ async def Activate(event) :
             await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
     
     else : 
-        JoinButton = Button.url("Vortex Saver 🌪", url='https://t.me/VortexSaver')
-        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = [[JoinButton]])
+        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
+        UrlButtons = ButtonMaker(ChannelsLink , Button.url)
+        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
 
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : AdminCheck(event.message.chat_id)))
