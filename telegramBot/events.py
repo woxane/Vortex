@@ -56,11 +56,11 @@ def AdminCheck(TelUserId) :
 
     return False
 
-def ButtonInlineMaker(DataList) :
+def ButtonMaker(DataList , ButtonType) :
     # i want to inline buttons seprate two by two for this : 
     
-    Buttons = list(map(lambda DataIndex : [Button.inline(DataList[DataIndex]) , Button.inline(DataList[DataIndex + 1])] \
-            if DataIndex + 1 != len(DataList) else [Button.inline(DataList[DataIndex])] ,\
+    Buttons = list(map(lambda DataIndex : [ButtonType(DataList[DataIndex]) , ButtonType(DataList[DataIndex + 1])] \
+            if DataIndex + 1 != len(DataList) else [ButtonType(DataList[DataIndex])] ,\
             range(len(DataList))[::2] ))
    
     # this is for i want the done button be big and seprated
@@ -203,7 +203,7 @@ async def SponserRemove(event) :
     Data = SponsersData()
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
 
-    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
+    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline))
 
 
 @Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
@@ -237,7 +237,7 @@ async def InlineRemove(event) :
         # delete and pass the data
         ChannelNames = SponserRemover(UserSelection)  
         await event.answer('Removed ❌') 
-        await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
+        await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline))
     
     # none of them means it's Done 
     else : 
