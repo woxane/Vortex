@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from telegramBot import client
+import json
 
 class Main :
 
@@ -51,7 +52,8 @@ class Main :
 
 
 def ConfigCheck() : 
-    if not os.path.exists('.env') : 
+    if not os.path.exists('.env') :  
+        print('There is not any .env File Ready to create ...')
         InstaUsername = input('Enter your Instagram Username : ')
         InstaPass = input('Enter your Instagram Password : ')
         ApiId = int(input('Enter your Telegram Bot Api Id : '))
@@ -65,6 +67,15 @@ def ConfigCheck() :
             File.write(f'\nApiHash={ApiHash}')
             File.write(f'\nToken={Token}')
 
+        print('Done')
+
+    if not os.path.exists('SponsersData.json') :
+        print('There is not any SponsersData.json File Ready to create ... ')
+        # Creating empy json file 
+        with open('SponsersData.json' , 'w') as File : 
+           json.dump({} , File)
+        
+        print('Done')
 
 if __name__ == '__main__' : 
     MainClass = Main()
