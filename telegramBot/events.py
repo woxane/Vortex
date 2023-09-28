@@ -177,6 +177,17 @@ async def SponserAdd(event) :
     await event.respond('Channel Successfully Added ✅')
 
 
+@Client.on(events.NewMessage(pattern = 'Remove 🚮'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def SponserRemove(event) : 
+
+    with open('SponsersData.json' , 'r' ) as File : 
+        Data = json.load(File)
+        
+    ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
+
+    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
+
+
 def RunBot() :
     Client.start(bot_token = os.getenv('Token'))
     print('Successfully Connected !')
