@@ -62,6 +62,9 @@ def ButtonInlineMaker(DataList) :
     Buttons = list(map(lambda DataIndex : [Button.inline(DataList[DataIndex]) , Button.inline(DataList[DataIndex + 1])] \
             if DataIndex + 1 != len(DataList) else [Button.inline(DataList[DataIndex])] ,\
             range(len(DataList))[::2] ))
+   
+    # this is for i want the done button be big and seprated
+    Buttons.append(Button.inline('Done ✅'))
 
     return Buttons
     
