@@ -6,5 +6,5 @@ telegramBot/__pycache__
 *.session-journal
 *.db
 TODO.txt
-dump.json
+*.json
 .env
