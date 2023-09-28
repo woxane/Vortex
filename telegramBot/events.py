@@ -67,6 +67,15 @@ def ButtonInlineMaker(DataList) :
     Buttons.append([Button.inline('Done ✅')])
 
     return Buttons
+
+def SponserRemover(Name ) : 
+    with open('SponsersData.json' , 'r' ) as File : 
+        Datas = json.load(File)
+
+    Datas = list(filter(lambda Channels : Channels['Name'] != Name , Datas['Channels']))
+
+    with open('SponsersData.json' , 'w' ) as File : 
+        json.dump(Datas , File , indent = 4)
     
 
 async def JoinCheck(TelUserId) : 
@@ -182,13 +191,17 @@ async def SponserAdd(event) :
 
 @Client.on(events.NewMessage(pattern = 'Remove 🚮'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def SponserRemove(event) : 
-
+    # Global is the bad idea change it next time
+    global ChannelNames
     with open('SponsersData.json' , 'r' ) as File : 
         Data = json.load(File)
         
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
 
     await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
+
+
+
 
 
 def RunBot() :
