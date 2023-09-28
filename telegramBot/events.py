@@ -131,6 +131,15 @@ async def Broadcast(event) :
     else : 
         await event.respond('Hi')
 
+# These above patter need to be admin 
+@Client.on(events.NewMessage(pattern = 'Channel Sponser 🚀'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def Sponser(event) : 
+    ButtonMarkup = event.client.build_reply_markup([
+        [Button.text('Add 🆕') , Button.text('Remove 🚮')]
+        ])
+
+    await event.respond('Ok Sir , you want to Add Or Remove' , buttons = ButtonMarkup)
+    
 
 
 
