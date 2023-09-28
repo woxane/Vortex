@@ -88,7 +88,9 @@ async def JoinCheck(TelUserId) :
     # if it's not a member , get_permissions raise an error 
 
     try : 
-        await Client.get_permissions('VortexSaver' , TelUserId) 
+        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()))
+        for Link in ChannelsLink : 
+            await Client.get_permissions(Link , TelUserId )
         return True 
 
     except : 
