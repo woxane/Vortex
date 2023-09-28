@@ -70,14 +70,12 @@ def ButtonInlineMaker(DataList) :
 
 def SponsersData() : 
     with open('SponsersData.json' , 'r') as File : 
-        Data = json.load(File)['Channels']
-
-    return Data
-
-def SponserRemover(Name ) : 
-    with open('SponsersData.json' , 'r' ) as File : 
         Datas = json.load(File)
 
+    return Datas
+
+def SponserRemover(Name) :  
+    Datas = SponsersData()
     Datas = {'Channels' : list(filter(lambda Channels : Channels['Name'] != Name , Datas['Channels']))}
 
     with open('SponsersData.json' , 'w' ) as File : 
@@ -184,10 +182,9 @@ async def SponserAdd(event) :
 
     ChannelName = await GetReply('Enter the name of the channel . ' , event.message.chat_id)
     ChannelLink = await GetReply('Enter link of the channel . ' , event.message.chat_id)
+   
+    Data = SponsersData()
     
-    with open('SponsersData.json' , 'r' ) as File : 
-        Data = json.load(File)
-
     Data['Channels'].append({'Name' : ChannelName , 'Link' : ChannelLink , 'Date' : datetime.now().isoformat()})
     
     with open('SponsersData.json' , 'w') as File : 
@@ -200,9 +197,8 @@ async def SponserAdd(event) :
 async def SponserRemove(event) : 
     # Global is the bad idea change it next time
     global ChannelNames
-    with open('SponsersData.json' , 'r' ) as File : 
-        Data = json.load(File)
-        
+    
+    Data = SponsersData()
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
 
     await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonInlineMaker(ChannelNames))
@@ -210,9 +206,7 @@ async def SponserRemove(event) :
 
 @Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def SponserStatus(event) : 
-    with open('SponsersData.json' , 'r') as File : 
-        Datas = json.load(File)
-
+    Datas = SponsersData()
     Now = datetime.now()  
     Status = list(map(lambda Channel : f'[{Channel["Name"]}]({Channel["Link"]})  :\n\
             **{(Now - datetime.fromisoformat(Channel["Date"])).days} Day and {(Now - datetime.fromisoformat(Channel["Date"])).seconds // 3600} Hours Passed**'\
