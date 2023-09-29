@@ -49,7 +49,10 @@ def AuthKeyCreator(TelUserId) :
 
 def AdminCheck(TelUserId) : 
     Cursor.execute(f'select Admin from Info where TelUserId = {TelUserId}')
-    Permission = Cursor.fetchone()[0]
+    Permission = Cursor.fetchone()
+    
+    if Permission : 
+        return bool(Permission[0])
 
     return bool(Permission) 
 
@@ -160,7 +163,7 @@ async def Start(event) :
     else : 
         Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , SponsersData()['Channels'])))
         UrlButtons = UrlButtonMaker(Names , Links ,  '✅')
-        await event.respond('You must join to above channels before using the bot . \nClick ✅ after join the channel . ' , buttons = UrlButtons)
+        await event.respond('You must join to above channels before using the bot 🚷. \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/activate' ))
 async def Activate(event) :  
@@ -303,9 +306,22 @@ async def InlineRemove(event) :
 
         await event.edit(f'**{TelUserId} is {Permission}**' , buttons = InlineButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin']  , 'Done ✅'))
 
-    # none of them means it's Done 
-    else : 
+    # Done ✅ is specially for something for admins 
+    elif UserSelection == 'Done ✅' : 
         await event.edit('Successfully Completed 🫡')
+
+
+    # ✅ is specially for something for users  
+    elif UserSelection == '✅' :
+        if await JoinCheck(event.query.user_id) :  
+            await event.edit('Successfully Completed 🫡')
+
+        else : 
+            await event.answer("🚷 You haven't joined all the channels 🚷")
+
+    # Change it later
+    else : 
+        await event.edit('❌❌❌ There is Bug if you see it please dm me ❌❌❌')
          
 
 
