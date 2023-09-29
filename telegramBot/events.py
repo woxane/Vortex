@@ -252,6 +252,20 @@ async def UserAccess(event) :
         await event.respond('Not Found 🔍')
 
 
+@Client.on(events.NewMessage(pattern = 'Admins 👨‍💼/👩‍💼' , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def Admins(event) : 
+    global TelUserId
+    TelUserId = await GetReply('Type the User Id ' , event.message.chat_id)
+    
+    if UserExist(int(TelUserId)) :
+        Permission = 'Admin 👨‍💼' if AdminCheck(int(TelUserId)) else 'not Admin 👷'
+
+        await event.respond(f'**{TelUserId} is {Permission}**' , buttons = ButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin'] , Button.inline , 'Done ✅'))
+
+    else : 
+        await event.respond('Not Found 🔍')
+
+
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
     UserSelection = event.data.decode()
