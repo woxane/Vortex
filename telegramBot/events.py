@@ -96,6 +96,14 @@ def SponserRemover(Name) :
     
     return list(map(lambda Channels : Channels['Name'] , Datas['Channels']))
 
+def SponserAdder(ChannelName , ChannelLink) : 
+    Data = SponsersData()
+    
+    Data['Channels'].append({'Name' : ChannelName , 'Link' : ChannelLink , 'Date' : datetime.now().isoformat()})
+    
+    with open('SponsersData.json' , 'w') as File : 
+        json.dump(Data  , File , indent = 4)
+
 def AccessCheck(TelUserId) : 
     Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
     Access = Cursor.fetchone()[0]
@@ -211,14 +219,9 @@ async def SponserAdd(event) :
 
     ChannelName = await GetReply('Enter the name of the channel . ' , event.message.chat_id)
     ChannelLink = await GetReply('Enter link of the channel . ' , event.message.chat_id)
-   
-    Data = SponsersData()
     
-    Data['Channels'].append({'Name' : ChannelName , 'Link' : ChannelLink , 'Date' : datetime.now().isoformat()})
+    SponserAdder(ChannelName , ChannelLink)
     
-    with open('SponsersData.json' , 'w') as File : 
-        json.dump(Data  , File , indent = 4)
-
     await event.respond('Channel Successfully Added ✅')
 
 
