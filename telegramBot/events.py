@@ -238,10 +238,11 @@ async def UserCount(event) :
 
 @Client.on(events.NewMessage(pattern = 'Ban/UnBan User 🚫'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def UserAccess(event) : 
+    global TelUserId
     TelUserId = await GetReply('Type the User Id ' , event.message.chat_id)
     
     if UserExist(int(TelUserId)) :
-        Access = 'Not Banned 🔓' if AccessCheck(event.message.chat_id) else 'Banned 🔒' 
+        Access = 'Not Banned 🔓' if AccessCheck(int(TelUserId)) else 'Banned 🔒' 
          
         await event.respond(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
 
@@ -259,7 +260,14 @@ async def InlineRemove(event) :
         ChannelNames = SponserRemover(UserSelection)  
         await event.answer('Removed ❌') 
         await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline , 'Done ✅'))
-    
+   
+    elif UserSelection == 'Ban 🔒 / UnBan 🔓' : 
+        Access = 0 if AccessCheck(TelUserId) else 1
+        AccessChanger(TelUserId , Access) 
+        Access = 'Not Banned 🔓' if Access else 'Banned 🔒' 
+
+        await event.edit(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
+
     # none of them means it's Done 
     else : 
         await event.edit('Successfully Completed 🫡')
