@@ -83,6 +83,13 @@ def SponserRemover(Name) :
     
     return list(map(lambda Channels : Channels['Name'] , Datas['Channels']))
 
+def AccessCheck(TelUserId) : 
+    Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
+    Access = Cursor.fetchone()[0]
+
+    return bool(Access)
+
+
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
     # if it's not a member , get_permissions raise an error 
