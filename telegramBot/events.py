@@ -35,7 +35,7 @@ def UserExist(TelUserId) :
     return TelUserId in UserIdsList
 
 def AddUser(TelUserId) : 
-    Cursor.execute(f'insert into Info (TelUserId , Access , Active) values ({TelUserId} , 0 , 0)')
+    Cursor.execute(f'insert into Info (TelUserId , Access , Active) values ({TelUserId} , 1 , 0)')
 
 def AuthKeyCreator(TelUserId) : 
     Cursor.execute(f'select AuthKey from Info where TelUserId = {TelUserId}')
@@ -100,7 +100,7 @@ async def AdminPanel(event , Message) :
     ButtonMarkup = event.client.build_reply_markup([
         [Button.text('Send All 📢')],
         [Button.text('New Admin 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
-        [Button.text('Ban User 🚫') , Button.text('Users Numbers 📊')] ,
+        [Button.text('Ban/UnBan User 🚫') , Button.text('Users Numbers 📊')] ,
         [Button.text('Home 🏠')]
         ])
 
