@@ -53,7 +53,7 @@ def AdminCheck(TelUserId) :
 
     return bool(Permission) 
 
-def ButtonMaker(DataList , ButtonType) :
+def ButtonMaker(DataList , ButtonType , DoneMessage) :
     # i want to inline buttons seprate two by two for this : 
     
     Buttons = list(map(lambda DataIndex : [ButtonType(DataList[DataIndex]) , ButtonType(DataList[DataIndex + 1])] \
@@ -61,7 +61,8 @@ def ButtonMaker(DataList , ButtonType) :
             range(len(DataList))[::2] ))
    
     # this is for i want the done button be big and seprated
-    Buttons.append([Button.inline('Done ✅')])
+    if DoneMessage : 
+        Buttons.append([Button.inline(DoneMessage)]) 
 
     return Buttons
 
@@ -141,7 +142,7 @@ async def Start(event) :
     
     else : 
         ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
-        UrlButtons = ButtonMaker(ChannelsLink , Button.url)
+        UrlButtons = ButtonMaker(ChannelsLink , Button.url , '✅')
         await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/activate' ))
@@ -159,7 +160,7 @@ async def Activate(event) :
     
     else : 
         ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
-        UrlButtons = ButtonMaker(ChannelsLink , Button.url)
+        UrlButtons = ButtonMaker(ChannelsLink , Button.url , '✅')
         await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
 
 
@@ -203,13 +204,11 @@ async def SponserAdd(event) :
 
 @Client.on(events.NewMessage(pattern = 'Remove 🚮'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def SponserRemove(event) : 
-    # Global is the bad idea change it next time
-    global ChannelNames
     
     Data = SponsersData()
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
 
-    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline))
+    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline , 'Done ✅'))
 
 
 @Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
@@ -238,10 +237,10 @@ async def UserCount(event) :
 async def UserAccess(event) : 
     TelUserId = await GetReply('Type the User Id ' , event.message.chat_id)
     
-    if UserExist(TelUserId) :
+    if UserExist(int(TelUserId)) :
         Access = 'Not Banned 🔓' if AccessCheck(event.message.chat_id) else 'Banned 🔒' 
          
-        await event.respond(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline))
+        await event.respond(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
 
     else : 
         await event.respond('Not Found 🔍')
@@ -249,9 +248,9 @@ async def UserAccess(event) :
 
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
-    global ChannelNames
     UserSelection = event.data.decode()
-    
+    ChannelNames = list(map(lambda Channel : Channel['Name'] , SponsersData()['Channels']))
+
     if UserSelection in ChannelNames : 
         # delete and pass the data
         ChannelNames = SponserRemover(UserSelection)  
