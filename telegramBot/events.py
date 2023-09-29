@@ -90,6 +90,8 @@ def AccessCheck(TelUserId) :
 def AccessChanger(TelUserId , Access) : 
     Cursor.execute(f'update Info set Access = {Access} where TelUserId = {TelUserId}')
 
+def AdminChanger(TelUserId , Permission) : 
+    Cursor.execute(f'update Info set Admin = {Permission} where TelUserId = {TelUserId}')
 
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
