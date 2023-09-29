@@ -66,6 +66,18 @@ def InlineButtonMaker(DataList , DoneMessage) :
 
     return Buttons
 
+def UrlButtonMaker(Names , Links , DoneMessage) :
+    Buttons = list(map(lambda Index : [Button.url(Names[Index] , Links[Index]) , Button.url(Names[Index + 1] , Links[Index + 1])] \
+            if Index + 1 != len(Links) else [Button.url(Names[Index] , Links[Index])] ,\
+            range(len(Links))[::2] ))
+
+    # this is for i want the done button be big and seprated
+    if DoneMessage : 
+        Buttons.append([Button.inline(DoneMessage)]) 
+
+    return Buttons
+     
+
 def SponsersData() : 
     with open('SponsersData.json' , 'r') as File : 
         Datas = json.load(File)
@@ -98,7 +110,7 @@ async def JoinCheck(TelUserId) :
     # if it's not a member , get_permissions raise an error 
 
     try : 
-        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()))
+        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
         for Link in ChannelsLink : 
             await Client.get_permissions(Link , TelUserId )
         return True 
@@ -146,9 +158,9 @@ async def Start(event) :
             await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
     else : 
-        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
-        UrlButtons = ButtonMaker(ChannelsLink , Button.url , '✅')
-        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
+        Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , SponsersData()['Channels'])))
+        UrlButtons = UrlButtonMaker(Names , Links ,  '✅')
+        await event.respond('You must join to above channels before using the bot . \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/activate' ))
 async def Activate(event) :  
@@ -164,9 +176,9 @@ async def Activate(event) :
             await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
     
     else : 
-        ChannelsLink = list(map(lambda Channel : Channel['Link'] , SponsersData()['Channels']))
-        UrlButtons = ButtonMaker(ChannelsLink , Button.url , '✅')
-        await event.respond('You must join to above channels before using the bot . \n/start after join the channel . ' , buttons = UrlButtons)
+        Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , SponsersData()['Channels'])))
+        UrlButtons = UrlButtonMaker(Names , Links ,  '✅')
+        await event.respond('You must join to above channels before using the bot . \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : AdminCheck(event.message.chat_id)))
