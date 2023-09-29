@@ -51,10 +51,7 @@ def AdminCheck(TelUserId) :
     Cursor.execute(f'select Admin from Info where TelUserId = {TelUserId}')
     Permission = Cursor.fetchone()[0]
 
-    if Permission : 
-        return True
-
-    return False
+    return bool(Permission) 
 
 def ButtonMaker(DataList , ButtonType) :
     # i want to inline buttons seprate two by two for this : 
