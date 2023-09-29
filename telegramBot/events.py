@@ -53,11 +53,11 @@ def AdminCheck(TelUserId) :
 
     return bool(Permission) 
 
-def ButtonMaker(DataList , ButtonType , DoneMessage) :
+def InlineButtonMaker(DataList , DoneMessage) :
     # i want to inline buttons seprate two by two for this : 
     
-    Buttons = list(map(lambda DataIndex : [ButtonType(DataList[DataIndex]) , ButtonType(DataList[DataIndex + 1])] \
-            if DataIndex + 1 != len(DataList) else [ButtonType(DataList[DataIndex])] ,\
+    Buttons = list(map(lambda DataIndex : [Button.inline(DataList[DataIndex]) , Button.inline(DataList[DataIndex + 1])] \
+            if DataIndex + 1 != len(DataList) else [Button.inline(DataList[DataIndex])] ,\
             range(len(DataList))[::2] ))
    
     # this is for i want the done button be big and seprated
@@ -213,7 +213,7 @@ async def SponserRemove(event) :
     Data = SponsersData()
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Data['Channels']))
 
-    await event.respond('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline , 'Done ✅'))
+    await event.respond('Click on whichever one you want to remove 🚮' , buttons = InlineButtonMaker(ChannelNames , 'Done ✅'))
 
 
 @Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
@@ -246,7 +246,7 @@ async def UserAccess(event) :
     if UserExist(int(TelUserId)) :
         Access = 'Not Banned 🔓' if AccessCheck(int(TelUserId)) else 'Banned 🔒' 
          
-        await event.respond(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
+        await event.respond(f'**{TelUserId} Is {Access}**' , buttons = InlineButtonMaker(['Ban 🔒 / UnBan 🔓'] , 'Done ✅'))
 
     else : 
         await event.respond('Not Found 🔍')
@@ -260,7 +260,7 @@ async def Admins(event) :
     if UserExist(int(TelUserId)) :
         Permission = 'Admin 👨‍💼' if AdminCheck(int(TelUserId)) else 'not Admin 👷'
 
-        await event.respond(f'**{TelUserId} is {Permission}**' , buttons = ButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin'] , Button.inline , 'Done ✅'))
+        await event.respond(f'**{TelUserId} is {Permission}**' , buttons = InlineButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin'] , 'Done ✅'))
 
     else : 
         await event.respond('Not Found 🔍')
@@ -275,21 +275,21 @@ async def InlineRemove(event) :
         # delete and pass the data
         ChannelNames = SponserRemover(UserSelection)  
         await event.answer('Removed ❌') 
-        await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker(ChannelNames , Button.inline , 'Done ✅'))
+        await event.edit('Click on whichever one you want to remove 🚮' , buttons = InlineButtonMaker(ChannelNames , 'Done ✅'))
    
     elif UserSelection == 'Ban 🔒 / UnBan 🔓' : 
         Access = 0 if AccessCheck(TelUserId) else 1
         AccessChanger(TelUserId , Access) 
         Access = 'Not Banned 🔓' if Access else 'Banned 🔒' 
 
-        await event.edit(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
+        await event.edit(f'**{TelUserId} Is {Access}**' , buttons = InlineButtonMaker(['Ban 🔒 / UnBan 🔓'] , 'Done ✅'))
     
     elif UserSelection == 'Grant 👨‍💼 / Revoke 👷 Admin' : 
         Permission = 0 if AdminCheck(TelUserId) else 1 
         AdminChanger(TelUserId , Permission)
         Permission = 'Admin 👨‍💼' if AdminCheck(int(TelUserId)) else 'not Admin 👷'
 
-        await event.edit(f'**{TelUserId} is {Permission}**' , buttons = ButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin'] , Button.inline , 'Done ✅'))
+        await event.edit(f'**{TelUserId} is {Permission}**' , buttons = InlineButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin']  , 'Done ✅'))
 
     # none of them means it's Done 
     else : 
