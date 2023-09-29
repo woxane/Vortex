@@ -1,12 +1,11 @@
 from instagrapi import Client
 import sqlite3
 import os 
-from dotenv import load_dotenv
 
 class InstagramAPI :
 
     def __init__(self) : 
-        
+
         ## Initialize Arrays
         self.Username = os.getenv('InstaUsername')
         self.Password = os.getenv('InstaPass')
@@ -17,8 +16,6 @@ class InstagramAPI :
         Connection = sqlite3.connect('Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
 
-        # Using .env File
-        load_dotenv()
 
     def Login(self) : 
         self.User = Client() 
