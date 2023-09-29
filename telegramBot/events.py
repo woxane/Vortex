@@ -234,6 +234,19 @@ async def UserCount(event) :
     await event.respond(f"We've Had **{UserCount}** Users Until Now")
 
 
+@Client.on(events.NewMessage(pattern = 'Ban/UnBan User 🚫'  , func = lambda event : AdminCheck(event.message.chat_id))) 
+async def UserAccess(event) : 
+    TelUserId = await GetReply('Type the User Id ' , event.message.chat_id)
+    
+    if UserExist(TelUserId) :
+        Access = 'Not Banned 🔓' if AccessCheck(event.message.chat_id) else 'Banned 🔒' 
+         
+        await event.respond(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline))
+
+    else : 
+        await event.respond('Not Found 🔍')
+
+
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
     global ChannelNames
