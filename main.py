@@ -36,9 +36,14 @@ class Main :
                 if ActiveTelUserIds: 
                     for TelUserId in ActiveTelUserIds : 
                         self.SendMessage('Activated :)' , TelUserId  ) 
-        except : 
+
+        except Exception as ERROR : 
+            print(f'ERROR : {ERROR}')
             print('Log out...')
-            print('Try to log in... ')
+            print('Try to log in... ') 
+            # we delete dump.json file for if the script used it \
+                    # will create new dump.json
+            os.remove('dump.json')
             self.Page.Login()
             self.CheckDms()
 
