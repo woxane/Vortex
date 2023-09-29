@@ -90,8 +90,6 @@ def AccessCheck(TelUserId) :
 def AccessChanger(TelUserId , Access) : 
     Cursor.execute(f'update Info set Access = {Access} where TelUserId = {TelUserId}')
 
-def AdminChanger(TelUserId , Permission) : 
-    Cursor.execute(f'update Info set Admin = {Permission} where TelUserId = {TelUserId}')
 
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
@@ -109,7 +107,7 @@ async def JoinCheck(TelUserId) :
 async def AdminPanel(event , Message) : 
     ButtonMarkup = event.client.build_reply_markup([
         [Button.text('Send All 📢')],
-        [Button.text('New Admin 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
+        [Button.text('Admins 👨‍💼/👩‍💼') , Button.text('Channel Sponser 🚀')],
         [Button.text('Ban/UnBan User 🚫') , Button.text('Users Numbers 📊')] ,
         [Button.text('Home 🏠')]
         ])
