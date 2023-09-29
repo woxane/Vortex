@@ -35,7 +35,7 @@ def UserExist(TelUserId) :
     return TelUserId in UserIdsList
 
 def AddUser(TelUserId) : 
-    Cursor.execute(f'insert into Info (TelUserId , Access , Active) values ({TelUserId} , 1 , 0)')
+    Cursor.execute(f'insert into Info (TelUserId , Access , Active , Admin) values ({TelUserId} , 1 , 0 ,0)')
 
 def AuthKeyCreator(TelUserId) : 
     Cursor.execute(f'select AuthKey from Info where TelUserId = {TelUserId}')
@@ -48,7 +48,7 @@ def AuthKeyCreator(TelUserId) :
     return AuthKey
 
 def AdminCheck(TelUserId) : 
-    Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
+    Cursor.execute(f'select Admin from Info where TelUserId = {TelUserId}')
     Permission = Cursor.fetchone()[0]
 
     if Permission : 
