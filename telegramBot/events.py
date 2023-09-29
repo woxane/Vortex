@@ -116,6 +116,14 @@ def AccessChanger(TelUserId , Access) :
 def AdminChanger(TelUserId , Permission) : 
     Cursor.execute(f'update Info set Admin = {Permission} where TelUserId = {TelUserId}')
 
+def SpentTime(Time) : 
+    Now = datetime.now()  
+    
+    Days = (Now - datetime.fromisoformat(Time)).days
+    Hours = (Now - datetime.fromisoformat(Time)).seconds // 3600
+
+    return Days , Hours
+
 async def JoinCheck(TelUserId) : 
     # Check if the user is a member or not / 
     # if it's not a member , get_permissions raise an error 
@@ -237,9 +245,8 @@ async def SponserRemove(event) :
 @Client.on(events.NewMessage(pattern = 'Status ℹ️'  , func = lambda event : AdminCheck(event.message.chat_id))) 
 async def SponserStatus(event) : 
     Datas = SponsersData()
-    Now = datetime.now()  
     Status = list(map(lambda Channel : f'[{Channel["Name"]}]({Channel["Link"]})  :\n\
-            **{(Now - datetime.fromisoformat(Channel["Date"])).days} Day and {(Now - datetime.fromisoformat(Channel["Date"])).seconds // 3600} Hours Passed**'\
+            **{SpentTime(Channel["Date"])[0]} Day and {SpentTime(Channel["Date"])[1]} Hours Passed**'\
             , Datas['Channels']))
 
     await event.respond('\n'.join(Status))
