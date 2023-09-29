@@ -283,6 +283,13 @@ async def InlineRemove(event) :
         Access = 'Not Banned 🔓' if Access else 'Banned 🔒' 
 
         await event.edit(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker(['Ban 🔒 / UnBan 🔓'],Button.inline , 'Done ✅'))
+    
+    elif UserSelection == 'Grant 👨‍💼 / Revoke 👷 Admin' : 
+        Permission = 0 if AdminCheck(TelUserId) else 1 
+        AdminChanger(TelUserId , Permission)
+        Permission = 'Admin 👨‍💼' if AdminCheck(int(TelUserId)) else 'not Admin 👷'
+
+        await event.edit(f'**{TelUserId} is {Permission}**' , buttons = ButtonMaker(['Grant 👨‍💼 / Revoke 👷 Admin'] , Button.inline , 'Done ✅'))
 
     # none of them means it's Done 
     else : 
