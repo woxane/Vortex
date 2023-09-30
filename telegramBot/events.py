@@ -18,7 +18,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.WARNING) 
 
 # Connect to DataBase
-Connection = sqlite3.connect('Vortex.db' , isolation_level = None , check_same_thread = False )
+Connection = sqlite3.connect('database/Vortex.db' , isolation_level = None , check_same_thread = False )
 Cursor = Connection.cursor()
 
 
@@ -82,7 +82,7 @@ def UrlButtonMaker(Names , Links , DoneMessage) :
      
 
 def SponsersData() : 
-    with open('SponsersData.json' , 'r') as File : 
+    with open('database/SponsorsData.json' , 'r') as File : 
         Datas = json.load(File)
 
     return Datas
@@ -91,7 +91,7 @@ def SponserRemover(Name) :
     Datas = SponsersData()
     Datas = {'Channels' : list(filter(lambda Channels : Channels['Name'] != Name , Datas['Channels']))}
 
-    with open('SponsersData.json' , 'w' ) as File : 
+    with open('database/SponsorsData.json' , 'w' ) as File : 
         json.dump(Datas , File , indent = 4)
     
     return list(map(lambda Channels : Channels['Name'] , Datas['Channels']))
@@ -101,7 +101,7 @@ def SponserAdder(ChannelName , ChannelLink) :
     
     Data['Channels'].append({'Name' : ChannelName , 'Link' : ChannelLink , 'Date' : datetime.now().isoformat()})
     
-    with open('SponsersData.json' , 'w') as File : 
+    with open('database/SponsorsData.json' , 'w') as File : 
         json.dump(Data  , File , indent = 4)
 
 def AccessCheck(TelUserId) : 
