@@ -10,11 +10,11 @@ class InstagramAPI :
         self.Username = os.getenv('InstaUsername')
         self.Password = os.getenv('InstaPass')
         
-        self.Login()
-        
         # 1 means Login Normally 
         # 0 means Login with dump.json
         self.LoginStatus = None
+
+        self.Login()
 
         # Connect to Database 
         Connection = sqlite3.connect('../database/Vortex.db' , isolation_level = None )
