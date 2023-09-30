@@ -43,7 +43,7 @@ class Main :
             print('Try to log in... ') 
             # we delete dump.json file for if the script used it \
                     # will create new dump.json
-            os.remove('dump.json')
+            os.remove('database/dump.json')
             self.Page.Login()
             self.CheckDms()
 
@@ -74,10 +74,10 @@ def ConfigCheck() :
 
         print('Done')
 
-    if not os.path.exists('SponsersData.json') :
+    if not os.path.exists('database/SponsersData.json') :
         print('There is not any SponsersData.json File Ready to create ... ')
         # Creating empy json file 
-        with open('SponsersData.json' , 'w') as File : 
+        with open('database/SponsersData.json' , 'w') as File : 
             json.dump({'Channels' : []} , File , indent = 4)
         
         print('Done')
