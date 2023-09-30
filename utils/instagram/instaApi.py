@@ -12,6 +12,10 @@ class InstagramAPI :
         
         self.Login()
         
+        # 1 means Login Normally 
+        # 0 means Login with dump.json
+        self.LoginStatus = None
+
         # Connect to Database 
         Connection = sqlite3.connect('../database/Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
@@ -22,14 +26,14 @@ class InstagramAPI :
 
         if os.path.exists('../database/dump.json') : 
             self.User.load_settings('../database/dump.json') 
-            print('Load from dump.json')
+            print('Login With dump.json')
+            self.LoginStatus = 0 
 
         else : 
             self.User.login(self.Username, self.Password)
             self.User.dump_settings('../database/dump.json')
             print('Login Normally')
-
-        print('Login successful')
+            self.LoginStatus = 1
 
 
     def CheckPost(self) : 
