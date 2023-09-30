@@ -1,10 +1,7 @@
 from telethon.sync import TelegramClient , events
 import logging
-import threading
-import asyncio 
 import os 
 from dotenv import load_dotenv
-from . import events
 
 
 class Bot : 
@@ -15,17 +12,11 @@ class Bot :
             
         # os.getenv ouput is passing string var /
         # so for ApiId we must to convert it to integer
-        self.Client = TelegramClient('data1' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
+        self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
 
 
         logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                             level=logging.WARNING)
-       
-        EventsThread = threading.Thread(target=EventThread)
-        EventsThread.daemon = True
-        EventsThread.start()
-
-        self.Client.start(bot_token = os.getenv('Token')) 
     
 
     def SendMedia(self , Url , TelUserId , Caption) : 
@@ -37,10 +28,5 @@ class Bot :
 
 
         
-def EventThread() : 
-    Loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(Loop)
-
-    events.RunBot()
     
 

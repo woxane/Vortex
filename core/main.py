@@ -1,7 +1,15 @@
 import os
 from dotenv import load_dotenv
-from telegramBot import client
 import json
+import asyncio
+import threading
+
+#XXX do something about this i don't want it like this : 
+from sys import path
+path.append('../')
+from utils.telegram import client
+from utils.instagram import instaApi
+from handlers import events
 
 class Main :
 
@@ -10,14 +18,15 @@ class Main :
         load_dotenv()
 
         ConfigCheck() 
-    
-        # First check for config because in instaApi we import config 
-        import instaApi 
 
         self.Page = instaApi.InstagramAPI()
-
+        
         self.TelBot = client.Bot()
         
+        EventsThread = threading.Thread(target=EventsHandler)
+        EventsThread.daemon = True
+        EventsThread.start()
+
     def CheckDMs(self): 
         # Check every second 
         try : 
@@ -43,7 +52,7 @@ class Main :
             print('Try to log in... ') 
             # we delete dump.json file for if the script used it \
                     # will create new dump.json
-            os.remove('database/dump.json')
+            os.remove('../database/dump.json')
             self.Page.Login()
             self.CheckDms()
 
@@ -57,7 +66,7 @@ class Main :
 
 
 def ConfigCheck() : 
-    if not os.path.exists('.env') :  
+    if not os.path.exists('../.env') :  
         print('There is not any .env File Ready to create ...')
         InstaUsername = input('Enter your Instagram Username : ')
         InstaPass = input('Enter your Instagram Password : ')
@@ -65,7 +74,7 @@ def ConfigCheck() :
         ApiHash = input('Enter you Telegram Bot Api Hash : ' )
         Token = input('Enter you Telegram Bot Token : ')
         # Writing config file 
-        with open('.env' , 'w') as File : 
+        with open('../.env' , 'w') as File : 
             File.write(f'InstaUsername={InstaUsername}')
             File.write(f'\nInstaPass={InstaPass}')
             File.write(f'\nApiId={ApiId}')
@@ -74,13 +83,19 @@ def ConfigCheck() :
 
         print('Done')
 
-    if not os.path.exists('database/SponsorsData.json') :
+    if not os.path.exists('../database/SponsorsData.json') :
         print('There is not any SponsorsData.json File Ready to create ... ')
         # Creating empy json file 
-        with open('database/SponsorsData.json' , 'w') as File : 
+        with open('../database/SponsorsData.json' , 'w') as File : 
             json.dump({'Channels' : []} , File , indent = 4)
         
         print('Done')
+
+def EventsHandler() : 
+    Loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(Loop)
+
+    events.RunBot()
 
 if __name__ == '__main__' : 
     MainClass = Main()
