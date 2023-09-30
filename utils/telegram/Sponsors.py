@@ -1,3 +1,4 @@
+import json 
 
 def Data() : 
     with open('../database/SponsorsData.json' , 'r') as File : 
