@@ -7,5 +7,5 @@ def Exists(TelUserId) :
     UserIdsList = list(map(lambda x : x[0] , Cursor.fetchall()))  
     return TelUserId in UserIdsList
 
-def AddUser(TelUserId) : 
+def Add(TelUserId) : 
     Cursor.execute(f'insert into Info (TelUserId , Access , Active , Admin) values ({TelUserId} , 1 , 0 ,0)')
