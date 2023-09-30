@@ -70,7 +70,7 @@ async def GetReply(Message , TelUserId) :
 
     
 
-@Client.on(events.NewMessage(pattern = '/start' )) 
+@Client.on(events.NewMessage(pattern = '/start' , func = lambda event : Check.Access(event.message.chat_id))) 
 async def Start(event) : 
     
     if Check.Admin(event.message.chat_id) : 
@@ -96,7 +96,7 @@ async def Start(event) :
         UrlButtons = ButtonMaker.Url(Names , Links ,  '✅')
         await event.respond('You must join to above channels before using the bot 🚷. \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
-@Client.on(events.NewMessage(pattern = '/activate' ))
+@Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
     # Check if user is join our channel or not  
     if await JoinCheck(event.message.chat_id) :
