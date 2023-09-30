@@ -13,19 +13,19 @@ class InstagramAPI :
         self.Login()
         
         # Connect to Database 
-        Connection = sqlite3.connect('Vortex.db' , isolation_level = None )
+        Connection = sqlite3.connect('database/Vortex.db' , isolation_level = None )
         self.Cursor = Connection.cursor()
 
 
     def Login(self) : 
         self.User = Client() 
 
-        if os.path.exists('dump.json') : 
-            self.User.load_settings('dump.json') 
+        if os.path.exists('database/dump.json') : 
+            self.User.load_settings('database/dump.json') 
 
         else : 
             self.User.login(self.Username, self.Password)
-            self.User.dump_settings('dump.json')
+            self.User.dump_settings('database/dump.json')
 
         print('Login successful')
 
