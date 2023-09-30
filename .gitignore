@@ -1,7 +1,4 @@
-config.py
-__pycache__/*
-telegramBot/data.session
-telegramBot/__pycache__
+__pycache__
 *.session
 *.session-journal
 *.db
