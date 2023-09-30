@@ -22,10 +22,12 @@ class InstagramAPI :
 
         if os.path.exists('../database/dump.json') : 
             self.User.load_settings('../database/dump.json') 
+            print('Load from dump.json')
 
         else : 
             self.User.login(self.Username, self.Password)
             self.User.dump_settings('../database/dump.json')
+            print('Login Normally')
 
         print('Login successful')
 
