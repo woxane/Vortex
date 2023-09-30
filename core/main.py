@@ -54,7 +54,7 @@ class Main :
                     # will create new dump.json
             os.remove('../database/dump.json')
             self.Page.Login()
-            self.CheckDms()
+            self.CheckDMs()
 
 
     def SendMedia(self , Url , TelUserId , Caption ) :
