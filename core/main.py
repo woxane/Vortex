@@ -50,9 +50,12 @@ class Main :
             print(f'ERROR : {ERROR}')
             print('Log out...')
             print('Try to log in... ') 
-            # we delete dump.json file for if the script used it \
-                    # will create new dump.json
-            os.remove('../database/dump.json')
+            # delete the dump.json if we login with it and failed 
+            # 1 means Login Normally 
+            # 0 means Login with dump.json
+            if not self.Page.LoginStatus : 
+                os.remove('../database/dump.json')
+
             self.Page.Login()
             self.CheckDMs()
 
