@@ -1,4 +1,4 @@
-from __init__ import Cursor 
+from utils.telegram.__init__ import Cursor 
 
 def Access(TelUserId , Access) : 
     Cursor.execute(f'update Info set Access = {Access} where TelUserId = {TelUserId}')

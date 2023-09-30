@@ -1,4 +1,4 @@
-from __init__ import Cursor
+from utils.telegram.__init__ import Cursor 
 
 def Exists(TelUserId) : 
     Cursor.execute(f'select TelUserId from Info')

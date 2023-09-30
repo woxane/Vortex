@@ -1,4 +1,4 @@
-from __init__ import Cursor 
+from utils.telegram.__init__ import Cursor 
 from datetime import datetime
 
 def Admin(TelUserId) : 
