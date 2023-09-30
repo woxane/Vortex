@@ -74,10 +74,10 @@ def ConfigCheck() :
 
         print('Done')
 
-    if not os.path.exists('database/SponsersData.json') :
-        print('There is not any SponsersData.json File Ready to create ... ')
+    if not os.path.exists('database/SponsorsData.json') :
+        print('There is not any SponsorsData.json File Ready to create ... ')
         # Creating empy json file 
-        with open('database/SponsersData.json' , 'w') as File : 
+        with open('database/SponsorsData.json' , 'w') as File : 
             json.dump({'Channels' : []} , File , indent = 4)
         
         print('Done')
