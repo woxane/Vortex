@@ -37,7 +37,7 @@ def SpentTime(Time) :
 
     return Days , Hours
 
-def IsMember(Client , TelUser) : 
+def IsMember(Client , TelUserId) : 
     # Check if the user is a member or not \
             # if it's not a member , get_permissions raise an error 
 
