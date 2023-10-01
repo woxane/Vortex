@@ -19,7 +19,7 @@ def Access(TelUserId) :
 
     return bool(Access)
 
-def Activate(TelUserId) : 
+def Active(TelUserId) : 
     Cursor.execute(f'select Active from Info where TelUserId = {TelUserId}')
     Active = Cursor.fetchone()
     
