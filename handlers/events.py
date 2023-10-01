@@ -39,18 +39,6 @@ def AuthKeyCreator(TelUserId) :
 
     return AuthKey
 
-async def JoinCheck(TelUserId) : 
-    # Check if the user is a member or not / 
-    # if it's not a member , get_permissions raise an error 
-
-    try : 
-        ChannelsLink = list(map(lambda Channel : Channel['Link'] , Sponsors.Data()['Channels']))
-        for Link in ChannelsLink : 
-            await Client.get_permissions(Link , TelUserId )
-        return True 
-
-    except : 
-        return False 
 
 async def AdminPanel(event , Message) : 
     ButtonMarkup = event.client.build_reply_markup([
@@ -78,7 +66,7 @@ async def Start(event) :
 
 
     # Check if user is join our channel or not  
-    elif await JoinCheck(event.message.chat_id) : 
+    elif await Check.IsMember(Client , event.message.chat_id) : 
             
         if not User.Exists(event.message.chat_id) :
             User.Add(event.message.chat_id) 
@@ -99,7 +87,7 @@ async def Start(event) :
 @Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
     # Check if user is join our channel or not  
-    if await JoinCheck(event.message.chat_id) :
+    if await Check.IsMember(Client , event.message.chat_id) :
 
         if Check.Active(event.message.chat_id) : 
             await event.respond('You are already Activated ! ')
@@ -238,7 +226,7 @@ async def InlineRemove(event) :
 
     # ✅ is specially for something for users  
     elif UserSelection == '✅' :
-        if await JoinCheck(event.query.user_id) :  
+        if await Check.IsMember(Client , event.query.user_id) :  
             await event.edit('Successfully Completed 🫡')
 
         else : 
