@@ -9,7 +9,7 @@ from sys import path
 path.append('../')
 from utils.telegram import client , Check
 from utils.instagram import instaApi
-from utils.general import Config
+from utils.general import Config , ValidationCheck
 from handlers import events
 
 class Main :
@@ -84,6 +84,17 @@ def ConfigCheck() :
         print('There is not any SponsorsData.json File Ready to create ... ')
         Config.CreateJson('../database/SponsorsData.json' , {'Channels' : []})
         print('Done')
+    
+    if not ValidationCheck.JsonFile('../database/SponsorsData.json') : 
+        print('The SponsorsData.json is corrupted ...')
+        input('Enter to continue Creating New SponsorsData.json file ...')
+        Config.CreateJson('../database/SponsorsData.json' , {'Channels' : []})
+
+    if not ValidationCheck.Env('../.env') :
+        print('The .env is corrupted ...')
+        input('Enter to continue Creating New .env file ...')
+        Config.CreateEnv('../.env')
+
 
 def EventsHandler() : 
     Loop = asyncio.new_event_loop()
