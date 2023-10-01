@@ -1,4 +1,5 @@
 from utils.telegram.__init__ import Cursor 
+from utils.telegram import Sponsors 
 from datetime import datetime
 
 def Admin(TelUserId) : 
@@ -35,3 +36,16 @@ def SpentTime(Time) :
     Hours = (Now - datetime.fromisoformat(Time)).seconds // 3600
 
     return Days , Hours
+
+def IsMember(Client , TelUser) : 
+    # Check if the user is a member or not \
+            # if it's not a member , get_permissions raise an error 
+
+    try : 
+        ChannelsLink = list(map(lambda Channel : Channel['Link'] , Sponsors.Data()['Channels']))
+        for Link in ChannelsLink : 
+            Client.get_permissions(Link , TelUserId )
+        return True 
+
+    except : 
+        return False
