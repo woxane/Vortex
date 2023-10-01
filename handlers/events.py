@@ -80,7 +80,7 @@ async def Start(event) :
             await event.respond('Your account is not active .\nplease activate your account with /activate .')
     
     else : 
-        Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , Sopnsors.Data()['Channels'])))
+        Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , Sponsors.Data()['Channels'])))
         UrlButtons = ButtonMaker.Url(Names , Links ,  '✅')
         await event.respond('You must join to above channels before using the bot 🚷. \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
