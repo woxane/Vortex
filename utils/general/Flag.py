@@ -8,5 +8,5 @@ def Check(Flag) :
         exit()
 
     elif Flag == '-E' : 
-        Config.EditEnv()
+        Config.EditEnv('../.env')
     
