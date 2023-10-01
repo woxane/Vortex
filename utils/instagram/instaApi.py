@@ -67,10 +67,10 @@ class InstagramAPI :
                             yield (TelUserId[0] , ''.join(Slide.video_url) , Caption) 
 
                 
-                self.User.direct_send('Done !' , user_ids = [Message.user_id])
+                self.SendMessage('Done !' , Message.user_id)
 
             else : 
-                self.User.direct_send('Your Account is not Activated !!' , user_ids = [Message.user_id])
+                self.SendMessage('Your Account is not Activated !!' , Message.user_id)
 
             # seen the Direct for not consider the direct again
             self.User.direct_send_seen(thread_id = Direct.id)
@@ -94,7 +94,8 @@ class InstagramAPI :
                     self.User.direct_send('Activated' , user_ids = [Message.user_id])
                     yield TelUserId 
 
-
+    def SendMessage(self , Message , InstaUserId) :
+        self.User.direct_send(Message , user_ids = [InstaUserId])
     
     
 
