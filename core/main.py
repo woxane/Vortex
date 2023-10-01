@@ -7,7 +7,7 @@ import threading
 #XXX do something about this i don't want it like this : 
 from sys import path
 path.append('../')
-from utils.telegram import client
+from utils.telegram import client , Check
 from utils.instagram import instaApi
 from handlers import events
 
@@ -38,7 +38,12 @@ class Main :
                 if Directs :  
                     for Direct in Directs : 
                         # Direct[1] is Url , Shema of Direct : (id , url , caption) 
-                        self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+                        if Check.IsMember(self.TelBot.Client , Direct[0]) :  
+                            self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
+                        else : 
+                            self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel")
+                            self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel")
+                               
                
                 # Check Pendings 
                 ActiveTelUserIds= list(self.Page.PendingCheck()) 
