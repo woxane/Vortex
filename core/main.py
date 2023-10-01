@@ -9,6 +9,7 @@ from sys import path
 path.append('../')
 from utils.telegram import client , Check
 from utils.instagram import instaApi
+from utils.general import Config
 from handlers import events
 
 class Main :
@@ -76,19 +77,7 @@ class Main :
 def ConfigCheck() : 
     if not os.path.exists('../.env') :  
         print('There is not any .env File Ready to create ...')
-        InstaUsername = input('Enter your Instagram Username : ')
-        InstaPass = input('Enter your Instagram Password : ')
-        ApiId = int(input('Enter your Telegram Bot Api Id : '))
-        ApiHash = input('Enter you Telegram Bot Api Hash : ' )
-        Token = input('Enter you Telegram Bot Token : ')
-        # Writing config file 
-        with open('../.env' , 'w') as File : 
-            File.write(f'InstaUsername={InstaUsername}')
-            File.write(f'\nInstaPass={InstaPass}')
-            File.write(f'\nApiId={ApiId}')
-            File.write(f'\nApiHash={ApiHash}')
-            File.write(f'\nToken={Token}')
-
+        Config.CreateEnv('../.env')
         print('Done')
 
     if not os.path.exists('../database/SponsorsData.json') :
