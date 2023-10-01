@@ -1,6 +1,9 @@
 from instagrapi import Client
 import sqlite3
 import os 
+from utils.instagram import (
+        Check
+        )
 
 class InstagramAPI :
 
@@ -43,10 +46,7 @@ class InstagramAPI :
             Message = Direct.messages[0]
             print(Message.user_id)
 
-            self.Cursor.execute(f'select TelUserId from Info where InstaUserId = {Message.user_id}') 
-            TelUserId = self.Cursor.fetchone()
-            
-            if TelUserId : 
+            if Check.Active(Message.user_id): 
                 # if the last post in DM is Video  :
                 if Message.item_type == 'clip' :
                         # give the data like this ( user_id , url , caption) for authintication we need ... 
