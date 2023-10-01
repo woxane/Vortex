@@ -11,3 +11,7 @@ def CreateEnv(Path) :
         File.write(f'\nApiId={ApiId}')
         File.write(f'\nApiHash={ApiHash}')
         File.write(f'\nToken={Token}')
+
+def CreateJson(Path , Data) :
+    with open(Path , 'w') as File : 
+        json.dump(Data , File , indent = 4)  
