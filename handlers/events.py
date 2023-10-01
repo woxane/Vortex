@@ -103,6 +103,16 @@ async def Activate(event) :
         UrlButtons = ButtonMaker.Url(Names , Links ,  '✅')
         await event.respond('You must join to above channels before using the bot . \nClick ✅ after join the channel . ' , buttons = UrlButtons)
 
+@Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
+async def Feedback(event) : 
+    Message = await GetReply('Send your feedback') 
+    AdminsId = Find.Admins()
+    Button = ButtonMaker.Inline([event.message.chat_id])
+    for AdminId in AdminsId : 
+        await Client.send_message(AdminId , Message , buttons = Button)
+
+    await event.respond('Done')
+
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
