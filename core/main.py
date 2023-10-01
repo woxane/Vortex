@@ -8,7 +8,7 @@ import threading
 from sys import path
 path.append('../')
 from utils.telegram import client , Check
-from utils.instagram import instaApi
+from utils.instagram import instaApi , Find
 from utils.general import Config , ValidationCheck
 from handlers import events
 
@@ -42,7 +42,8 @@ class Main :
                         if Check.IsMember(self.TelBot.Client , Direct[0]) :  
                             self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
                         else : 
-                            self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel")
+                            self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
+                            InstaUserId = Find.InstaUserId(Direct[0])
                             self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel")
                                
                
