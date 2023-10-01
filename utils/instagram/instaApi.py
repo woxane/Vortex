@@ -87,7 +87,7 @@ class InstagramAPI :
                 # thats because if anyone send invalid AuthKey / 
                 # could send it again cause this function / 
                 # just see those pending direct for auth key 
-                if Check.AuthKey(Message.user_id) : 
+                if Check.AuthKey(Message.text) : 
                     TelUserId = Find.TelUserId(Message.user_id)
                     Alter.InstaUserId(Message.user_id , TelUserId)
 
