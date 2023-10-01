@@ -13,6 +13,7 @@ from utils.telegram import (
         Check , 
         Sponsors , 
         User ,
+        Find , 
         )
 
 # Using ./.env File
@@ -106,9 +107,8 @@ async def Activate(event) :
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
     Message = await GetReply('Send your message ' , event.message.chat_id)
+    UserIds = Find.TelUserIds()
 
-    Cursor.execute('select TelUserId from Info ')
-    UserIds = list(map(lambda x : x[0] , Cursor.fetchall()))
     for UserId in UserIds :
         await Client.send_message(UserId , '**Admin Message : \n**' + Message ) 
 
