@@ -1,4 +1,4 @@
-from utils.instagra.__init__ import Cursor
+from utils.instagram.__init__ import Cursor
 
 def TelUserId(InstaUserId) :
     Cursor.execute(f'select TelUserId from Info where InstaUserId = {InstaUserId}') 
