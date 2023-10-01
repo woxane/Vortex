@@ -107,7 +107,7 @@ async def Activate(event) :
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
     Message = await GetReply('Send your message ' , event.message.chat_id)
-    UserIds = Find.TelUserIds()
+    UserIds = Find.Users()
 
     for UserId in UserIds :
         await Client.send_message(UserId , '**Admin Message : \n**' + Message ) 
