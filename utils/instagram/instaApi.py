@@ -21,11 +21,6 @@ class InstagramAPI :
 
         self.Login()
 
-        # Connect to Database 
-        Connection = sqlite3.connect('../database/Vortex.db' , isolation_level = None )
-        self.Cursor = Connection.cursor()
-
-
     def Login(self) : 
         self.User = Client() 
 
@@ -51,8 +46,10 @@ class InstagramAPI :
             if Check.Active(Message.user_id): 
                 # if the last post in DM is Video  :
                 if Message.item_type == 'clip' :
-                        # give the data like this ( user_id , url , caption) for authintication we need ... 
-                        yield (TelUserId[0] , ''.join(Message.clip.video_url) , Message.clip.caption_text )
+                        # give the data like this ( user_id , url , caption) \
+                                # for authintication we need ... 
+                        yield (TelUserId[0] , ''.join(Message.clip.video_url) ,\
+                                Message.clip.caption_text )
            
 
                 elif Message.item_type == 'xma_media_share' : 
