@@ -82,10 +82,7 @@ def ConfigCheck() :
 
     if not os.path.exists('../database/SponsorsData.json') :
         print('There is not any SponsorsData.json File Ready to create ... ')
-        # Creating empy json file 
-        with open('../database/SponsorsData.json' , 'w') as File : 
-            json.dump({'Channels' : []} , File , indent = 4)
-        
+        Config.CreateJson('../database/SponsorsData.json' , {'Channels' : []})
         print('Done')
 
 def EventsHandler() : 
