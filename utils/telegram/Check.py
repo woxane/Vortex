@@ -12,9 +12,21 @@ def Admin(TelUserId) :
 
 def Access(TelUserId) : 
     Cursor.execute(f'select Access from Info where TelUserId = {TelUserId}')
-    Access = Cursor.fetchone()[0]
+    Access = Cursor.fetchone()
+
+    if Access : 
+        return bool(Access[0])
 
     return bool(Access)
+
+def Activate(TelUserId) : 
+    Cursor.execute(f'select Active from Info where TelUserId = {TelUserId}')
+    Active = Cursor.fetchone()
+    
+    if Active : 
+        return bool(Active[0])
+
+    return bool(Active)
 
 def SpentTime(Time) : 
     Now = datetime.now()  
