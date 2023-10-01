@@ -85,7 +85,7 @@ async def Start(event) :
 
         
         # If telegram account is acctive 
-        if ActivateCheck(event.message.chat_id) : 
+        if Check.Active(event.message.chat_id) : 
             await event.respond("Hi")
                 
         else : 
@@ -101,7 +101,7 @@ async def Activate(event) :
     # Check if user is join our channel or not  
     if await JoinCheck(event.message.chat_id) :
 
-        if ActivateCheck(event.message.chat_id) : 
+        if Check.Active(event.message.chat_id) : 
             await event.respond('You are already Activated ! ')
                 
         else :
