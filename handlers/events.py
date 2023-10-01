@@ -113,6 +113,12 @@ async def Feedback(event) :
 
     await event.respond('Done')
 
+@Client.on(events.NewMessage(pattern = '/help' , func = lambda event : Check.Access(event.message.chat_id)))
+async def Help(event) :
+    await event.respond('''/start Welcome message
+/activate Activate your account
+/feedback Send a feedback to developer
+/help Shows the help message''') 
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
