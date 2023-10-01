@@ -66,7 +66,7 @@ async def Start(event) :
 
 
     # Check if user is join our channel or not  
-    elif await Check.IsMember(Client , event.message.chat_id) : 
+    elif Check.IsMember(Client , event.message.chat_id) : 
             
         if not User.Exists(event.message.chat_id) :
             User.Add(event.message.chat_id) 
@@ -87,7 +87,7 @@ async def Start(event) :
 @Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
     # Check if user is join our channel or not  
-    if await Check.IsMember(Client , event.message.chat_id) :
+    if Check.IsMember(Client , event.message.chat_id) :
 
         if Check.Active(event.message.chat_id) : 
             await event.respond('You are already Activated ! ')
@@ -226,7 +226,7 @@ async def InlineRemove(event) :
 
     # ✅ is specially for something for users  
     elif UserSelection == '✅' :
-        if await Check.IsMember(Client , event.query.user_id) :  
+        if Check.IsMember(Client , event.query.user_id) :  
             await event.edit('Successfully Completed 🫡')
 
         else : 
