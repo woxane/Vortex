@@ -25,10 +25,12 @@ def EditEnv(Path) :
 
     for Name , Value in Data.items() : 
         print(Name + ' : ' + Value) 
-        NewValue = input(f'Enter your new Value for {Name} : (Enter for dont changing)')
+        NewValue = input(f'Enter your new Value for {Name} (Enter for dont changing) : ')
         if NewValue : 
             dotenv.set_key(Path , Name ,NewValue )
-
+    
+    print('Done , run the main.py again . ') 
+    exit()
 
 def CreateJson(Path , Data) :
     with open(Path , 'w') as File : 
