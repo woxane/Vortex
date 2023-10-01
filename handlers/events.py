@@ -105,11 +105,11 @@ async def Activate(event) :
 
 @Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Feedback(event) : 
-    Message = await GetReply('Send your feedback') 
+    Message = await GetReply('Send your feedback' , event.message.chat_id) 
     AdminsId = Find.Admins()
-    Button = ButtonMaker.Inline([event.message.chat_id])
+    ButtonMarkup = ButtonMaker.Inline([str(event.message.chat_id)] , Data = b'TelUserId')
     for AdminId in AdminsId : 
-        await Client.send_message(AdminId , Message , buttons = Button)
+        await Client.send_message(AdminId , '**From User : **\n    ' + Message , buttons = ButtonMarkup)
 
     await event.respond('Done')
 
@@ -206,23 +206,26 @@ async def Admins(event) :
 
 @Client.on(events.CallbackQuery())
 async def InlineRemove(event) :
-    UserSelection = event.data.decode()
+    DataSelection = event.data.decode()
+    InlineMessage = await event.get_message()
+    UserIdSelection = InlineMessage.buttons[0][0].text
+
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Sponsors.Data()['Channels']))
 
-    if UserSelection in ChannelNames : 
+    if DataSelection in ChannelNames : 
         # delete and pass the data
-        ChannelNames = Sponsors.Remove(UserSelection)  
+        ChannelNames = Sponsors.Remove(DataSelection)  
         await event.answer('Removed ❌') 
         await event.edit('Click on whichever one you want to remove 🚮' , buttons = ButtonMaker.Inline(ChannelNames , 'Done ✅'))
    
-    elif UserSelection == 'Ban 🔒 / UnBan 🔓' : 
+    elif DataSelection == 'Ban 🔒 / UnBan 🔓' : 
         Access = 0 if Check.Access(TelUserId) else 1
         Alter.Access(TelUserId , Access) 
         Access = 'Not Banned 🔓' if Access else 'Banned 🔒' 
 
         await event.edit(f'**{TelUserId} Is {Access}**' , buttons = ButtonMaker.Inline(['Ban 🔒 / UnBan 🔓'] , 'Done ✅'))
     
-    elif UserSelection == 'Grant 👨‍💼 / Revoke 👷 Admin' : 
+    elif DataSelection == 'Grant 👨‍💼 / Revoke 👷 Admin' : 
         Permission = 0 if Check.Admin(TelUserId) else 1 
         Alter.Admin(TelUserId , Permission)
         Permission = 'Admin 👨‍💼' if Check.Admin(int(TelUserId)) else 'not Admin 👷'
@@ -230,17 +233,22 @@ async def InlineRemove(event) :
         await event.edit(f'**{TelUserId} is {Permission}**' , buttons = ButtonMaker.Inline(['Grant 👨‍💼 / Revoke 👷 Admin']  , 'Done ✅'))
 
     # Done ✅ is specially for something for admins 
-    elif UserSelection == 'Done ✅' : 
+    elif DataSelection == 'Done ✅' : 
         await event.edit('Successfully Completed 🫡')
 
 
     # ✅ is specially for something for users  
-    elif UserSelection == '✅' :
+    elif DataSelection == '✅' :
         if Check.IsMember(Client , event.query.user_id) :  
             await event.edit('Successfully Completed 🫡')
 
         else : 
             await event.answer("🚷 You haven't joined all the channels 🚷")
+    
+    elif DataSelection == 'TelUserId' : 
+        await InlineMessage.delete() 
+        Message = await GetReply(f'Send your message to {UserIdSelection}' , event.query.user_id)
+        await Client.send_message(int(UserIdSelection) , f'**Your answer from developer : **\n    ' + Message )
 
     # Change it later
     else : 
