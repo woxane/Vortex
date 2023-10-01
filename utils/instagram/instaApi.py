@@ -2,7 +2,9 @@ from instagrapi import Client
 import sqlite3
 import os 
 from utils.instagram import (
-        Check
+        Check , 
+        Alter , 
+        Find , 
         )
 
 class InstagramAPI :
@@ -88,22 +90,13 @@ class InstagramAPI :
                 # thats because if anyone send invalid AuthKey / 
                 # could send it again cause this function / 
                 # just see those pending direct for auth key 
-                TelUserId = self.AuthKeyCheck(Message)
-                # Here instead of True or False we get Telegram User Id from AuthKeyCheck function 
-                # and check it if it is empty or not 
-                if TelUserId :  
+                if Check.AuthKey(Message.user_id) : 
+                    TelUserId = Find.TelUserId(Message.user_id)
+                    Alter.InstaUserId(Message.user_id , TelUserId)
+
                     self.User.direct_send('Activated' , user_ids = [Message.user_id])
                     yield TelUserId 
 
-    def AuthKeyCheck(self , Message ) : 
-        self.Cursor.execute('select TelUserId , AuthKey from Info where AuthKey is not NULL') 
-        TelUserIds , AuthKeys = zip(*self.Cursor.fetchall())
-         
-        # Check if the AuthKey is correct 
-        if Message.text in AuthKeys :
-            TelUserId = TelUserIds[AuthKeys.index(Message.text)]
-            self.Cursor.execute(f'update Info set InstaUserId = {Message.user_id} , Active = 1 where TelUserId = {TelUserId} ')
-            return TelUserId
 
     
     
