@@ -1,4 +1,4 @@
-from utils.instagram.__init__ imoprt Cursor
+from utils.instagram.__init__ import Cursor
 
 def Active(InstaUserId) : 
     Cursor.execute(f'select Active from Info where InstaUserId = {InstaUserId}')
