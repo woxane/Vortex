@@ -5,11 +5,11 @@ import asyncio
 import threading
 
 #XXX do something about this i don't want it like this : 
-from sys import path
+from sys import path , argv 
 path.append('../')
 from utils.telegram import client , Check
 from utils.instagram import instaApi , Find
-from utils.general import Config , ValidationCheck
+from utils.general import Config , ValidationCheck , Flag
 from handlers import events
 
 class Main :
@@ -19,6 +19,9 @@ class Main :
         load_dotenv()
 
         ConfigCheck() 
+        
+        if len(argv) > 1 :
+            Flag.Check(argv[1])  
 
         self.Page = instaApi.InstagramAPI()
         
