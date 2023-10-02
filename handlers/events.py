@@ -65,7 +65,7 @@ async def Start(event) :
     if not User.Exists(event.message.chat_id) :
         User.Add(event.message.chat_id) 
         await event.respond('Please select the language you want to set 🗣' ,\
-                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷']))
+                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] , Data = b'Language' ))
 
     if Check.Admin(event.message.chat_id) : 
         await AdminPanel(event , 'Hey Admin 🤵')  
@@ -214,7 +214,7 @@ async def Admins(event) :
 async def InlineRemove(event) :
     DataSelection = event.data.decode()
     InlineMessage = await event.get_message()
-    UserIdSelection = InlineMessage.buttons[0][0].text
+    TextSelection = InlineMessage.buttons[0][0].text
 
     ChannelNames = list(map(lambda Channel : Channel['Name'] , Sponsors.Data()['Channels']))
 
@@ -253,8 +253,17 @@ async def InlineRemove(event) :
     
     elif DataSelection == 'TelUserId' : 
         await InlineMessage.delete() 
-        Message = await GetReply(f'Send your message to {UserIdSelection}' , event.query.user_id)
-        await Client.send_message(int(UserIdSelection) , f'**Your answer from developer : **\n    ' + Message )
+        Message = await GetReply(f'Send your message to {TextSelection}' , event.query.user_id)
+        await Client.send_message(int(TextSelection) , f'**Your answer from developer : **\n    ' + Message )
+
+    elif DataSelection == 'Language' : 
+        if TextSelection == 'English 🇬🇧' : 
+            Alter.Language(event.query.user_id , 'en')
+        elif TextSelection == 'فارسی 🇮🇷': 
+            Alter.Language(event.query.user_id , 'fa')
+
+        await event.edit('Successfully Completed 🫡')
+
 
     # Change it later
     else : 
