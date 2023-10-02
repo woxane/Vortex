@@ -62,17 +62,16 @@ async def GetReply(Message , TelUserId) :
 @Client.on(events.NewMessage(pattern = '/start' , func = lambda event : Check.Access(event.message.chat_id))) 
 async def Start(event) : 
     
-    if Check.Admin(event.message.chat_id) : 
-        await AdminPanel(event , 'Hey Admin 🤵')  
-
-
-    elif not User.Exists(event.message.chat_id) :
+    if not User.Exists(event.message.chat_id) :
         User.Add(event.message.chat_id) 
         await event.respond('Please select the language you want to set 🗣' ,\
                 buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷']))
-        
+
+    if Check.Admin(event.message.chat_id) : 
+        await AdminPanel(event , 'Hey Admin 🤵')  
+
     # Check if user is join our channel or not  
-    if Check.IsMember(Client , event.message.chat_id) : 
+    elif Check.IsMember(Client , event.message.chat_id) : 
             
         # If telegram account is acctive 
         if Check.Active(event.message.chat_id) : 
