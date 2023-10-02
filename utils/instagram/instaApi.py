@@ -45,10 +45,11 @@ class InstagramAPI :
 
             if Check.Active(Message.user_id): 
                 # if the last post in DM is Video  :
+                TelUserId = Find.TelUserId(Message.user_id)
                 if Message.item_type == 'clip' :
                         # give the data like this ( user_id , url , caption) \
                                 # for authintication we need ... 
-                        yield (TelUserId[0] , ''.join(Message.clip.video_url) ,\
+                        yield (TelUserId , ''.join(Message.clip.video_url) ,\
                                 Message.clip.caption_text )
            
 
@@ -61,10 +62,10 @@ class InstagramAPI :
                         # If the slide is photo 
                         Type = Slide.media_type 
                         if Type == 1 :  
-                            yield (TelUserId[0] , ''.join(Slide.thumbnail_url),  Caption)
+                            yield (TelUserId , ''.join(Slide.thumbnail_url),  Caption)
 
                         elif Type == 2 : 
-                            yield (TelUserId[0] , ''.join(Slide.video_url) , Caption) 
+                            yield (TelUserId , ''.join(Slide.video_url) , Caption) 
 
                 
                 self.SendMessage('Done !' , Message.user_id)
