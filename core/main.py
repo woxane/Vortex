@@ -47,7 +47,7 @@ class Main :
                         else : 
                             self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
                             InstaUserId = Find.InstaUserId(Direct[0])
-                            self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel")
+                            self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , InstaUserId)
                                
                
                 # Check Pendings 
