@@ -5,3 +5,6 @@ def Access(TelUserId , Access) :
 
 def Admin(TelUserId , Permission) : 
     Cursor.execute(f'update Info set Admin = {Permission} where TelUserId = {TelUserId}')
+
+def Language(TelUserId , _lang) : 
+    Cursor.execute(f'update Info set Language = {_lang} where TelUserId = {TelUserId}')
