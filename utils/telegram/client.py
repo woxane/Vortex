@@ -18,7 +18,7 @@ class Bot :
         logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                             level=logging.WARNING)
         
-        self.Clietn.start(bot_token = os.getenv('Token'))
+        self.Client.start(bot_token = os.getenv('Token'))
 
     def SendMedia(self , Url , TelUserId , Caption) : 
         self.Client.send_file(TelUserId , Url , caption=Caption , force_document=False) 
