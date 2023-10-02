@@ -66,13 +66,14 @@ async def Start(event) :
         await AdminPanel(event , 'Hey Admin 🤵')  
 
 
-    # Check if user is join our channel or not  
-    elif Check.IsMember(Client , event.message.chat_id) : 
-            
-        if not User.Exists(event.message.chat_id) :
-            User.Add(event.message.chat_id) 
-
+    elif not User.Exists(event.message.chat_id) :
+        User.Add(event.message.chat_id) 
+        await event.respond('Please select the language you want to set 🗣' ,\
+                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷']))
         
+    # Check if user is join our channel or not  
+    if Check.IsMember(Client , event.message.chat_id) : 
+            
         # If telegram account is acctive 
         if Check.Active(event.message.chat_id) : 
             await event.respond("Hi")
