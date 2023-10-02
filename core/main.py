@@ -11,6 +11,7 @@ from utils.telegram import client , Check
 from utils.instagram import instaApi , Find
 from utils.general import Config , ValidationCheck , Flag
 from handlers import events
+from instagrapi.exceptions import LoginRequired
 
 class Main :
 
@@ -56,7 +57,7 @@ class Main :
                     for TelUserId in ActiveTelUserIds : 
                         self.SendMessage('Activated :)' , TelUserId  ) 
 
-        except Exception as ERROR : 
+        except LoginRequired as ERROR : 
             print(f'ERROR : {ERROR}')
             print('Log out...')
             print('Try to log in... ') 
