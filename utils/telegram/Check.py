@@ -49,3 +49,8 @@ def IsMember(Client , TelUserId) :
 
     except : 
         return False
+
+def Language(TelUserId) : 
+    Cursor.execute(f'select Language from Info where TeLuserId = {TelUserId}')
+    _Language = Cursor.fetchone()[0]
+    return _Language
