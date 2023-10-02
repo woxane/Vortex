@@ -67,7 +67,15 @@ class InstagramAPI :
                         elif Type == 2 : 
                             yield (TelUserId , ''.join(Slide.video_url) , Caption) 
 
-                
+
+                #XXX THIS ABOVE CODE WON'T WORK ON NORMAL INSTAGRAPI LIBRARY
+                # I CHANGE A LITTLE CODE , FOR GETTING THE STORYS
+                elif Message.item_type ==  'xma_story_share' : 
+                    print(Message)
+                    StoryUrl = ''.join(Message.xma_share.preview_url)
+                    yield (TelUserId , StoryUrl , '')
+
+
                 self.SendMessage('Done !' , Message.user_id)
 
             else : 
