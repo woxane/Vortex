@@ -117,7 +117,13 @@ async def Activate(event) :
 
 @Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Feedback(event) : 
-    Message = await GetReply('Send your feedback' , event.message.chat_id) 
+    if Check.Language == 'en' : 
+        Messages = FeedbackEn()
+    
+    elif Check.Language == 'fa' : 
+        Messages = FeedbackFa()
+
+    Message = await GetReply(Messages['Feedback'] , event.message.chat_id) 
     AdminsId = Find.Admins()
     ButtonMarkup = ButtonMaker.Inline([str(event.message.chat_id)] , Data = b'TelUserId')
     for AdminId in AdminsId : 
