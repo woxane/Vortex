@@ -57,9 +57,14 @@ def HelpFa():
 /help نمایش این پیغام'''
 
 def SettingsEn() : 
-    return 'Welcome to the settings menu 🛠\nPlease select an option :'
-
+    Messages = {'Welcome' :  'Welcome to the settings menu 🛠\nPlease select an option :' ,
+               'BotLanguage' : 'Bot Language 🗣' }
+    
+    return Messages
 
 def SettingsEn() : 
-    return 'به منوی تنظیمات خوش آمدید 🛠\nلطفا یک گزینه را انتخاب کنید :'
+    Messages = {'Welcome' :  'به منوی تنظیمات خوش آمدید 🛠\nلطفا یک گزینه را انتخاب کنید :' ,
+                'BotLanguage' : 'زبان ربات 🗣' }
+
+    return Messages
 
