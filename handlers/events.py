@@ -75,7 +75,7 @@ async def Start(event) :
     if not User.Exists(event.message.chat_id) :
         User.Add(event.message.chat_id) 
         await event.respond(Messages['LanguageSet'] ,\
-                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] , Data = b'Language' ))
+                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] ))
 
     if Check.Admin(event.message.chat_id) : 
         await AdminPanel(event , Messages['HeyAdmin'])  
@@ -291,14 +291,14 @@ async def InlineRemove(event) :
         Message = await GetReply(f'Send your message to {TextSelection}' , event.query.user_id)
         await Client.send_message(int(TextSelection) , f'**Your answer from developer : **\n    ' + Message )
 
-    elif DataSelection == 'Language' : 
-        print(TextSelection)
-        if TextSelection == 'English 🇬🇧' : 
-            Alter.Language(event.query.user_id , 'en')
-        elif TextSelection == 'فارسی 🇮🇷' : 
-            Alter.Language(event.query.user_id , 'fa')
-
+    elif DataSelection == 'English 🇬🇧' : 
+        Alter.Language(event.query.user_id , 'en')
         await event.edit('Successfully Completed 🫡')
+
+    elif DataSelection == 'فارسی 🇮🇷' : 
+        Alter.Language(event.query.user_id , 'fa')
+        await event.edit('Successfully Completed 🫡')
+
     
     elif DataSelection == 'BotLanguage' :
         if Check.Language(event.query.user_id) == 'en' : 
@@ -308,7 +308,7 @@ async def InlineRemove(event) :
             Messages = StartFa()
             
         await event.edit(Messages['LanguageSet'] ,\
-                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] , Data = b'Language' ))
+                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] ))
 
     # Change it later
     else : 
