@@ -55,3 +55,11 @@ def HelpFa():
 /activate اکتیو کردن اکانت
 /feedback ارسال نظر به ادمین 
 /help نمایش این پیغام'''
+
+def SettingsEn() : 
+    return 'Welcome to the settings menu 🛠\nPlease select an option :'
+
+
+def SettingsEn() : 
+    return 'به منوی تنظیمات خوش آمدید 🛠\nلطفا یک گزینه را انتخاب کنید :'
+
