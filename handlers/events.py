@@ -67,6 +67,10 @@ async def Start(event) :
 
     elif Check.Language(event.message.chat_id) == 'fa' :
         Messages = StartFa()
+    
+    # WHEN THE USER ISN'T ADDED
+    else : 
+        Messages = StartEn()
 
     if not User.Exists(event.message.chat_id) :
         User.Add(event.message.chat_id) 
@@ -147,9 +151,9 @@ async def Settings(event) :
         Messages = SettingsEn()
 
     elif Check.Language(event.message.chat_id) == 'fa' : 
-        Messages = Settingsfa()
+        Messages = SettingsFa()
 
-    await event.respond(Message['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage'))
+    await event.respond(Messages['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage'))
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
@@ -288,13 +292,23 @@ async def InlineRemove(event) :
         await Client.send_message(int(TextSelection) , f'**Your answer from developer : **\n    ' + Message )
 
     elif DataSelection == 'Language' : 
+        print(TextSelection)
         if TextSelection == 'English 🇬🇧' : 
             Alter.Language(event.query.user_id , 'en')
-        elif TextSelection == 'فارسی 🇮🇷': 
+        elif TextSelection == 'فارسی 🇮🇷' : 
             Alter.Language(event.query.user_id , 'fa')
 
         await event.edit('Successfully Completed 🫡')
+    
+    elif DataSelection == 'BotLanguage' :
+        if Check.Language(event.query.user_id) == 'en' : 
+            Messages = StartEn()
 
+        elif Check.Language(event.query.user_id) == 'fa' : 
+            Messages = StartFa()
+            
+        await event.edit(Messages['LanguageSet'] ,\
+                buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] , Data = b'Language' ))
 
     # Change it later
     else : 
