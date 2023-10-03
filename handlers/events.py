@@ -15,6 +15,7 @@ from utils.telegram import (
         User ,
         Find , 
         )
+from handlers.__init__ import *
 
 # Using ./.env File
 load_dotenv()
@@ -61,29 +62,34 @@ async def GetReply(Message , TelUserId) :
 
 @Client.on(events.NewMessage(pattern = '/start' , func = lambda event : Check.Access(event.message.chat_id))) 
 async def Start(event) : 
-    
+    if Check.Language(event.message.chat_id) == 'en' :
+        Messages = StartEn()
+
+    elif Check.Language(event.message.chat_id) == 'fa' :
+        Messages = StartFa()
+
     if not User.Exists(event.message.chat_id) :
         User.Add(event.message.chat_id) 
-        await event.respond('Please select the language you want to set 🗣' ,\
+        await event.respond(Messages['LanguageSet'] ,\
                 buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] , Data = b'Language' ))
 
     if Check.Admin(event.message.chat_id) : 
-        await AdminPanel(event , 'Hey Admin 🤵')  
+        await AdminPanel(event , Messages['HeyAdmin'])  
 
     # Check if user is join our channel or not  
     elif Check.IsMember(Client , event.message.chat_id) : 
             
         # If telegram account is acctive 
         if Check.Active(event.message.chat_id) : 
-            await event.respond("Hi")
+            await event.respond(Messages['Hi'])
                 
         else : 
-            await event.respond('Your account is not active .\nplease activate your account with /activate .')
+            await event.respond(Messages['Activate']) 
     
     else : 
         Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , Sponsors.Data()['Channels'])))
         UrlButtons = ButtonMaker.Url(Names , Links ,  '✅')
-        await event.respond('You must join to above channels before using the bot 🚷. \nClick ✅ after join the channel . ' , buttons = UrlButtons)
+        await event.respond(Messages['JoinChannel'], buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
