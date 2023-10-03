@@ -43,3 +43,15 @@ def FeedbackFa() :
         'Feedback' : 'نظرتون رو ارسال کنید '
     }
     return Messages
+
+def HelpEn() : 
+    return '''/start Welcome message
+/activate Activate your account
+/feedback Send a feedback to developer
+/help Shows the help message'''
+
+def HelpFa(): 
+    return '''/start پیام خوش آمد گویی
+/activate اکتیو کردن اکانت
+/feedback ارسال نظر به ادمین 
+/help نمایش این پیغام'''
