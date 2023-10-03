@@ -93,10 +93,10 @@ async def Start(event) :
 
 @Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
-    if Check.Language(event.message.chat_id) : 
+    if Check.Language(event.message.chat_id)  == 'en': 
         Messages = ActivateEn()
 
-    elif Check.Language(event.message.chat_id) : 
+    elif Check.Language(event.message.chat_id)  == 'fa' : 
         Messages = ActivateFa()
 
     # Check if user is join our channel or not  
