@@ -15,3 +15,19 @@ def StartFa() :
     'Activate' : 'اکانت شما اکتیو نیستش . \n لطفا برای اکتیو کردن از /active استفاده کنید . ',
     'JoinChannel' : '🚷 شما قبل از استفاده از ربات باید در چنل های زیر جوین باشید . \n کلیک کنید .  ✅ بعد از جوین شدن بر روی  '}
     return Messages
+
+def ActivateEn() : 
+    Messages ={
+        'Activated' : 'You are already Activated ! ' ,
+        'AuthKey' : 'Send this AuthKey to [this page]' ,
+        'JoinChannel' : 'You must join to above channels before using the bot 🚷. \nClick ✅ after join the channel . ' , 
+    }
+    return Messages
+
+def ActivateFa() : 
+    Messages ={
+        'Activated' : 'اکانت شما اکتیو است . ' ,
+        'AuthKey' : 'این AuthKey  را  بفرستید[به این پیج]' ,
+        'JoinChannel' : '🚷 شما قبل از استفاده از ربات باید در چنل های زیر جوین باشید . \n کلیک کنید .  ✅ بعد از جوین شدن بر روی  ' , 
+    }
+    return Messages
