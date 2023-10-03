@@ -118,10 +118,10 @@ async def Activate(event) :
 @Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Feedback(event) : 
     if Check.Language == 'en' : 
-        Messages = FeedbackEn()
+        Messages = FeedbackEn(event.message.chat_id)
     
     elif Check.Language == 'fa' : 
-        Messages = FeedbackFa()
+        Messages = FeedbackFa(event.message.chat_id)
 
     Message = await GetReply(Messages['Feedback'] , event.message.chat_id) 
     AdminsId = Find.Admins()
@@ -133,10 +133,12 @@ async def Feedback(event) :
 
 @Client.on(events.NewMessage(pattern = '/help' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Help(event) :
-    await event.respond('''/start Welcome message
-/activate Activate your account
-/feedback Send a feedback to developer
-/help Shows the help message''') 
+    if Check.Language(event.message.chat_id) == 'en' : 
+        Message = HelpEn()
+    elif Check.Language(event.message.chat_id) == 'fa' : 
+        Message = HelpFa()
+
+    await event.respond(Message)
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
