@@ -31,3 +31,15 @@ def ActivateFa() :
         'JoinChannel' : '🚷 شما قبل از استفاده از ربات باید در چنل های زیر جوین باشید . \n کلیک کنید .  ✅ بعد از جوین شدن بر روی  ' , 
     }
     return Messages
+
+def FeedbackEn() : 
+    Messages = {
+        'Feedback' : 'Send your feedback'
+    }
+    return Messages
+
+def FeedbackFa() :
+    Messages = {
+        'Feedback' : 'نظرتون رو ارسال کنید '
+    }
+    return Messages
