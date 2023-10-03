@@ -144,10 +144,12 @@ async def Help(event) :
 @Client.on(events.NewMessage(pattern = '/settings' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Settings(event) : 
     if Check.Language(event.message.chat_id) == 'en' : 
-        Message = SettingsEn()
+        Messages = SettingsEn()
 
     elif Check.Language(event.message.chat_id) == 'fa' : 
-        Message = Settingsfa()
+        Messages = Settingsfa()
+
+    await event.respond(Message['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']]))
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
