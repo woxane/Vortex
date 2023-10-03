@@ -93,21 +93,27 @@ async def Start(event) :
 
 @Client.on(events.NewMessage(pattern = '/activate' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Activate(event) :  
+    if Check.Language(event.message.chat_id) : 
+        Messages = ActivateEn()
+
+    elif Check.Language(event.message.chat_id) : 
+        Messages = ActivateFa()
+
     # Check if user is join our channel or not  
     if Check.IsMember(Client , event.message.chat_id) :
 
         if Check.Active(event.message.chat_id) : 
-            await event.respond('You are already Activated ! ')
+            await event.respond(Messages['Activated'])
                 
         else :
             InstaLink = 'https://www.instagram.com/' + os.getenv('InstaUsername')
             AuthKey = AuthKeyCreator(event.message.chat_id)
-            await event.respond(f'Send this AuthKey to [this page]({InstaLink})\n`{AuthKey}`')
+            await event.respond(Messages['AuthKey']+f'({InstaLink})\n`{AuthKey}`')
     
     else : 
         Names , Links = zip(*(map(lambda Data : [Data['Name'] , Data['Link']] , Sponsors.Data()['Channels'])))
         UrlButtons = ButtonMaker.Url(Names , Links ,  '✅')
-        await event.respond('You must join to above channels before using the bot . \nClick ✅ after join the channel . ' , buttons = UrlButtons)
+        await event.respond(Messages['JoinChannel'] , buttons = UrlButtons)
 
 @Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Feedback(event) : 
