@@ -62,7 +62,7 @@ def SettingsEn() :
     
     return Messages
 
-def SettingsEn() : 
+def SettingsFa() : 
     Messages = {'Welcome' :  'به منوی تنظیمات خوش آمدید 🛠\nلطفا یک گزینه را انتخاب کنید :' ,
                 'BotLanguage' : 'زبان ربات 🗣' }
 
