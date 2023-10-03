@@ -149,7 +149,7 @@ async def Settings(event) :
     elif Check.Language(event.message.chat_id) == 'fa' : 
         Messages = Settingsfa()
 
-    await event.respond(Message['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']]))
+    await event.respond(Message['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage'))
 
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
