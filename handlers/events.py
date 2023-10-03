@@ -140,6 +140,15 @@ async def Help(event) :
 
     await event.respond(Message)
 
+
+@Client.on(events.NewMessage(pattern = '/settings' , func = lambda event : Check.Access(event.message.chat_id)))
+async def Settings(event) : 
+    if Check.Language(event.message.chat_id) == 'en' : 
+        Message = SettingsEn()
+
+    elif Check.Language(event.message.chat_id) == 'fa' : 
+        Message = Settingsfa()
+
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
     Message = await GetReply('Send your message ' , event.message.chat_id)
