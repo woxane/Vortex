@@ -21,9 +21,9 @@ async def GroupId(Client , GroupChatUsername) :
     except : 
         return False 
 
-def GroupTitle(Client , GroupChatId) : 
+async def GroupTitle(Client , GroupChatId) : 
     try : 
-        GroupChatEntity = Client.get_entity(PeerChannel(GroupChatUsername))
+        GroupChatEntity = await Client.get_entity(PeerChannel(GroupChatId))
         return GroupChatEntity.title
 
     except : 
