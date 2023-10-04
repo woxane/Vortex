@@ -335,6 +335,12 @@ async def InlineRemove(event) :
             
         await event.edit(Messages['LanguageSet'] ,\
                 buttons = ButtonMaker.Inline(['English 🇬🇧' ,'فارسی 🇮🇷'] ))
+    
+    elif DataSelection == 'Group' : 
+        GroupId = Find.Groups(event.query.user_id)
+        GroupTitle = Title if (Title := await Find.GroupTitle(Client , GroupId)) else str(GroupId) + ' : **Bot Disconnected ❌**'
+        GroupJoinLink = 'https://t.me/' + await Find.GroupLink(Client , GroupId)
+        await event.edit(f'[{GroupTitle}]({GroupJoinLink})')
 
     # Change it later
     else : 
