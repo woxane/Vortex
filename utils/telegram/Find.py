@@ -1,4 +1,5 @@
 from utils.telegram.__init__ import Cursor
+from telethon.tl.types import PeerChannel
 
 def Users() : 
     Cursor.execute('select TelUserId from Info')
@@ -16,6 +17,14 @@ async def GroupId(Client , GroupChatUsername) :
     try : 
         GroupChatEntity = await Client.get_entity(GroupChatUsername) 
         return GroupChatEntity.id
+
+    except : 
+        return False 
+
+def GroupTitle(Client , GroupChatId) : 
+    try : 
+        GroupChatEntity = await Client.get_entity(GroupChatUsername) 
+        return GroupChatEntity.title
 
     except : 
         return False 
