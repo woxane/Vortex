@@ -11,3 +11,11 @@ def Admins() :
     AdminsId = list(map(lambda x : x[0] , Cursor.fetchall()))
 
     return AdminsId 
+
+def GroupId(Client , GroupChatUsername) : 
+    try : 
+        GroupChatEntity = Client.get_entity(GroupChatUsername) 
+        return GroupChatEntity.id
+
+    except : 
+        return False 
