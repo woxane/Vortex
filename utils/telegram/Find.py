@@ -27,7 +27,7 @@ def GroupTitle(Client , GroupChatId) :
         return GroupChatEntity.title
 
     except : 
-        return False 
+        return None
 
 def Groups(TelUserId) : 
     Cursor.execute(f'select Groups from Info where TelUserId = {TelUserId}')
