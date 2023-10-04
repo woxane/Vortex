@@ -8,6 +8,7 @@ import threading
 from sys import path , argv 
 path.append('../')
 from utils.telegram import client , Check
+from utils.telegram import Find as TelegramFind
 from utils.instagram import instaApi , Find
 from utils.general import Config , ValidationCheck , Flag
 from handlers import events
@@ -44,7 +45,21 @@ class Main :
                     for Direct in Directs : 
                         # Direct[1] is Url , Shema of Direct : (id , url , caption) 
                         if asyncio.run(Check.IsMember(self.TelBot.Client , Direct[0])) :  
-                            self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
+                            TelegramGroupId = Find.Groups(Direct[0]) 
+                            if TelegramGroupId : 
+                                if asyncio.run(Check.BotMembership(self.TelBot.Client , TelegramGroupId)) : 
+                                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+                                    self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
+
+                                else : 
+                                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+                                    self.SendMessage('The Group username that you provided is no longer valid ❌\n**Maybe the bot is no longer a member of that chat**' , Direct[0])
+                                     
+
+
+                            else : 
+                                self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
+
                         else : 
                             self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
                             InstaUserId = Find.InstaUserId(Direct[0])
