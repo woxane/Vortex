@@ -155,6 +155,30 @@ async def Settings(event) :
 
     await event.respond(Messages['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage'))
 
+
+@Client.on(events.NewMessage(pattern = '/add' , func = lambda event : Check.Access(event.message.chat_id)))
+async def AddGroup(event) : 
+    if Check.Language(event.message.chat_id) == 'en' : 
+        Messages = AddGroupEn()
+
+    elif Check.Language(event.message.chat_id) == 'fa' : 
+        Messages = AddGroupFa()
+    
+    GroupUsername = await GetReply(Messages['GroupUsername'] , event.message.chat_id)
+
+    if Check.BotMembership(GroupChat) : 
+        GroupChatId = Find.GroupId(Client , GroupUsername) 
+        if GroupChatId : 
+            Alter.Group(event.message.chat_id , GroupChatId)
+            await event.respond(Messages['GroupAdded'])
+            await client.send_message(GroupChatId  , Messages['Welcome'] )
+
+        else : 
+            await event.respond(Messages['MembershipWarning'])
+
+    else : 
+        await event.respond(Messages['MembershipWarning'])
+
 @Client.on(events.NewMessage(pattern = 'Send All 📢' , func = lambda event : Check.Admin(event.message.chat_id)))
 async def Broadcast(event) : 
     Message = await GetReply('Send your message ' , event.message.chat_id)
