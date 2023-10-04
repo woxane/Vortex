@@ -59,13 +59,15 @@ def HelpFa():
 
 def SettingsEn() : 
     Messages = {'Welcome' :  'Welcome to the settings menu 🛠\nPlease select an option :' ,
-               'BotLanguage' : 'Bot Language 🗣' }
+               'BotLanguage' : 'Bot Language 🗣' , 
+                'CurrentGroups' : 'Groups  💬' , }
     
     return Messages
 
 def SettingsFa() : 
     Messages = {'Welcome' :  'به منوی تنظیمات خوش آمدید 🛠\nلطفا یک گزینه را انتخاب کنید :' ,
-                'BotLanguage' : 'زبان ربات 🗣' }
+                'BotLanguage' : 'زبان ربات 🗣' , 
+                'CurrentGroups' : 'گروه ها  💬' ,}
 
     return Messages
 
