@@ -1,6 +1,7 @@
 from utils.telegram.__init__ import Cursor 
 from utils.telegram import Sponsors 
 from datetime import datetime
+from telethon.tl.types import PeerChannel
 
 def Admin(TelUserId) : 
     Cursor.execute(f'select Admin from Info where TelUserId = {TelUserId}')
@@ -37,14 +38,15 @@ def SpentTime(Time) :
 
     return Days , Hours
 
-async def IsMember(Client , TelUserId) : 
+def IsMember(Client , TelUserId) : 
     # Check if the user is a member or not \
             # if it's not a member , get_permissions raise an error 
-
+    
+    print('Balam')
     try : 
         ChannelsLink = list(map(lambda Channel : Channel['Link'] , Sponsors.Data()['Channels']))
         for Link in ChannelsLink : 
-            await Client.get_permissions(Link , TelUserId )
+            Client.get_permissions(Link , TelUserId )
         return True 
 
     except : 
@@ -55,10 +57,17 @@ def Language(TelUserId) :
     _Language = Cursor.fetchone()[0]
     return _Language
 
-async def BotMembership(Client , GroupChat) : 
+def BotMembership(Client , GroupChat) : 
     try : 
-        await Client.get_entity(GroupChat) 
+
+        if type(GroupChat) == str:
+            Client.get_entity(GroupChat)
+
+        else : 
+            Client.get_entity(PeerChannel(int(GroupChat))) 
+
         return True
 
-    except : 
+    except Exception as e : 
+        print(e)
         return False
