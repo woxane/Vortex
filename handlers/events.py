@@ -152,8 +152,10 @@ async def Settings(event) :
 
     elif Check.Language(event.message.chat_id) == 'fa' : 
         Messages = SettingsFa()
-
-    await event.respond(Messages['Welcome'] , buttons = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage'))
+    
+    LanguageButton = ButtonMaker.Inline([Messages['BotLanguage']] , Data = b'BotLanguage')
+    GroupButton = ButtonMaker.Inline([Messages['CurrentGroups']] , Data = b'Group') 
+    await event.respond(Messages['Welcome'] , buttons = GroupButton + LanguageButton)
 
 
 @Client.on(events.NewMessage(pattern = '/add' , func = lambda event : Check.Access(event.message.chat_id)))
