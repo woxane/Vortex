@@ -19,3 +19,12 @@ def GroupId(Client , GroupChatUsername) :
 
     except : 
         return False 
+
+def Groups(TelUserId) : 
+    Cursor.execute(f'select Groups from Info where TelUserId = {TelUserId}')
+    Group = Cursor.fetchone()
+
+    if Group : 
+        return Group[0]
+
+    return Group
