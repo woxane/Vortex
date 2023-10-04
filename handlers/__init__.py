@@ -47,12 +47,14 @@ def HelpEn() :
     return '''/start Welcome message
 /activate Activate your account
 /feedback Send a feedback to developer
+/add Add a group for sending Instagram Medias separately
 /help Shows the help message'''
 
 def HelpFa(): 
     return '''/start پیام خوش آمد گویی
 /activate اکتیو کردن اکانت
 /feedback ارسال نظر به ادمین 
+/add اضافه کردن گروه برای فرستادن جداگانه ویدیو های اینستاگرام
 /help نمایش این پیغام'''
 
 def SettingsEn() : 
