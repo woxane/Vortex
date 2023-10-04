@@ -23,7 +23,7 @@ async def GroupId(Client , GroupChatUsername) :
 
 def GroupTitle(Client , GroupChatId) : 
     try : 
-        GroupChatEntity = Client.get_entity(GroupChatUsername) 
+        GroupChatEntity = Client.get_entity(PeerChannel(GroupChatUsername))
         return GroupChatEntity.title
 
     except : 
