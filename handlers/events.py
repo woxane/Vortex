@@ -166,8 +166,8 @@ async def AddGroup(event) :
     
     GroupUsername = await GetReply(Messages['GroupUsername'] , event.message.chat_id)
 
-    if await Check.BotMembership(Client , GroupUsername) : 
-        GroupChatId = await Find.GroupId(Client , GroupUsername) 
+    if Check.BotMembership(Client , GroupUsername) : 
+        GroupChatId = Find.GroupId(Client , GroupUsername) 
         if GroupChatId : 
             Alter.Group(event.message.chat_id , GroupChatId)
             await event.respond(Messages['GroupAdded'])
