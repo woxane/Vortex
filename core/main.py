@@ -43,7 +43,7 @@ class Main :
                 if Directs :  
                     for Direct in Directs : 
                         # Direct[1] is Url , Shema of Direct : (id , url , caption) 
-                        if Check.IsMember(self.TelBot.Client , Direct[0]) :  
+                        if asyncio.run(Check.IsMember(self.TelBot.Client , Direct[0])) :  
                             self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
                         else : 
                             self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
