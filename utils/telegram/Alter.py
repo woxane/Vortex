@@ -8,3 +8,6 @@ def Admin(TelUserId , Permission) :
 
 def Language(TelUserId , _lang) : 
     Cursor.execute(f"update Info set Language = '{_lang}' where TelUserId = {TelUserId}")
+
+def Group(TelUserId , GroupChatId) : 
+    Cursor.execute(f'update Info set Group = {GroupChatId} where TelUserId = {TelUserId}')
