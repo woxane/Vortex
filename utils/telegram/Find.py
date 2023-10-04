@@ -12,9 +12,9 @@ def Admins() :
 
     return AdminsId 
 
-def GroupId(Client , GroupChatUsername) : 
+async def GroupId(Client , GroupChatUsername) : 
     try : 
-        GroupChatEntity = Client.get_entity(GroupChatUsername) 
+        GroupChatEntity = await Client.get_entity(GroupChatUsername) 
         return GroupChatEntity.id
 
     except : 

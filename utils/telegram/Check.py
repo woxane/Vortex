@@ -37,14 +37,14 @@ def SpentTime(Time) :
 
     return Days , Hours
 
-def IsMember(Client , TelUserId) : 
+async def IsMember(Client , TelUserId) : 
     # Check if the user is a member or not \
             # if it's not a member , get_permissions raise an error 
 
     try : 
         ChannelsLink = list(map(lambda Channel : Channel['Link'] , Sponsors.Data()['Channels']))
         for Link in ChannelsLink : 
-            Client.get_permissions(Link , TelUserId )
+            await Client.get_permissions(Link , TelUserId )
         return True 
 
     except : 
@@ -55,9 +55,9 @@ def Language(TelUserId) :
     _Language = Cursor.fetchone()[0]
     return _Language
 
-def BotMembership(Client , GroupChat) : 
+async def BotMembership(Client , GroupChat) : 
     try : 
-        Client.get_entity(GroupChat) 
+        await Client.get_entity(GroupChat) 
         return True
 
     except : 
