@@ -27,4 +27,4 @@ def Groups(TelUserId) :
     if Group : 
         return Group[0]
 
-    return Group
+    return int(Group)
