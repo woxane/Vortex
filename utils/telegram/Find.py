@@ -29,6 +29,14 @@ async def GroupTitle(Client , GroupChatId) :
     except : 
         return None
 
+async def GroupLink(Client , GroupChatId) : 
+    try : 
+        GroupChatEntity = await Client.get_entity(PeerChannel(GroupChatId))
+        return GroupChatEntity.username
+
+    except : 
+        return None
+
 def Groups(TelUserId) : 
     Cursor.execute(f'select Groups from Info where TelUserId = {TelUserId}')
     Group = Cursor.fetchone()
