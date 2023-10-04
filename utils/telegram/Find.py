@@ -34,6 +34,6 @@ def Groups(TelUserId) :
     Group = Cursor.fetchone()
 
     if Group : 
-        return Group[0]
+        return int(Group[0])
 
-    return int(Group)
+    return Group
