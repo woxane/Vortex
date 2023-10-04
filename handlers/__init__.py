@@ -1,5 +1,4 @@
 
-
 def StartEn() :
     Messages = {'LanguageSet' : 'Please select the language you want to set 🗣',
     'HeyAdmin' : 'Hey Admin 🤵' , 
@@ -68,3 +67,22 @@ def SettingsFa() :
 
     return Messages
 
+def AddGroupEn() : 
+    Messages = {
+            'GroupUsername' : 'Please send the group username you want to add 💬 **with out the @**\nNote that you must add the bot to your chat 📝' , 
+            'MembershipWarning' : "❌ ُThe bot isn't a member of the group you provided ❌" , 
+            'GroupAdded' : 'Group username successfully added 🫡' ,
+            'Welcome' : 'Hey guys 🫠' ,
+            }
+    
+    return Messages
+
+def AddGroupFa()  :
+    Messages = {
+            'GroupUsername' : 'لطاف یوزرنیم گروهی که میخواهید اضافه کنید را بفرستید 💬 **بدون @** \n اینو در نظر داشته باشید که باید بات رو به گروهتون اضافه کرده باشید 📝'  ,
+            'MembershipWarning' : '❌ ُبات در حال حاضر در گروهی که دادید عضو نیست ❌' , 
+            'GroupAdded' : 'یوزر نیم گروه با موفقیت اضافه شد 🫡' ,
+            'Welcome' : 'سلام بچه ها 🫠' ,
+            }
+    
+    return Messages
