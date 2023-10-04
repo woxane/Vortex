@@ -54,3 +54,11 @@ def Language(TelUserId) :
     Cursor.execute(f'select Language from Info where TeLuserId = {TelUserId}')
     _Language = Cursor.fetchone()[0]
     return _Language
+
+def BotMembership(Client , GroupChat) : 
+    try : 
+        Client.get_entity(GroupChat) 
+        return True
+
+    except : 
+        return False
