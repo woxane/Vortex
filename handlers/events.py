@@ -58,7 +58,15 @@ async def GetReply(Message , TelUserId) :
         
         return (await Chat.get_reply()).text
 
-    
+
+async def BanWarning(event) : 
+    if Check.Language() == 'en' : 
+        Message = BanEn()
+
+    elif Check.Language() == 'fa' : 
+        Message = BanFa() 
+
+    await event.respond(Message)
 
 @Client.on(events.NewMessage(pattern = '/start' , func = lambda event : Check.Access(event.message.chat_id))) 
 async def Start(event) : 
