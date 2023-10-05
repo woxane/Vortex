@@ -6,6 +6,8 @@ from utils.instagram import (
         Alter , 
         Find , 
         )
+from utils.instagram.__init__ import *
+from utils.telegram.Check import Language
 
 class InstagramAPI :
 
@@ -43,9 +45,9 @@ class InstagramAPI :
             Message = Direct.messages[0]
             print(Message.user_id)
 
+            TelUserId = Find.TelUserId(Message.user_id)
             if Check.Active(Message.user_id): 
                 # if the last post in DM is Video  :
-                TelUserId = Find.TelUserId(Message.user_id)
                 if Message.item_type == 'clip' :
                         # give the data like this ( user_id , url , caption) \
                                 # for authintication we need ... 
@@ -76,8 +78,14 @@ class InstagramAPI :
                     yield (TelUserId , StoryUrl , '')
 
 
-            else : 
-                self.SendMessage('Your Account is not Activated !!' , Message.user_id)
+            else :
+
+                if Language(TelUserId) == 'en' : 
+                    Messages = MessagesEn()
+                elif Language(TelUserId) == 'fa' : 
+                    Messages = MessagesFa()
+
+                self.SendMessage(Messages['ActivateWarning'] , Message.user_id)
 
             # seen the Direct for not consider the direct again
             self.User.direct_send_seen(thread_id = Direct.id)
