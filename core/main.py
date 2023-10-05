@@ -43,27 +43,33 @@ class Main :
                 # Check that Directs won't be empty
                 if Directs :  
                     for Direct in Directs : 
-                        # Direct[1] is Url , Shema of Direct : (id , url , caption) 
-                        if Check.IsMember(self.TelBot.Client , Direct[0]) :  
-                            TelegramGroupId = TelegramFind.Groups(Direct[0]) 
-                            if TelegramGroupId : 
-                                if Check.BotMembership(self.TelBot.Client , TelegramGroupId) : 
-                                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
-                                    self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
+                        InstaUserId = Find.InstaUserId(Direct[0])
+                        # Direct[1] is Url , Shema of Direct : (id , url , caption) q
+                        if Check.Access(Direct[0])  :
+                            if Check.IsMember(self.TelBot.Client , Direct[0]) :  
+                                TelegramGroupId = TelegramFind.Groups(Direct[0]) 
+                                if TelegramGroupId : 
+                                    if Check.BotMembership(self.TelBot.Client , TelegramGroupId) : 
+                                        self.Page.SendMessage('Done !' , InstaUserId)
+                                        self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+                                        self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
+
+                                    else : 
+                                        self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
+                                        self.SendMessage('The Group username that you provided is no longer valid ❌\n**Maybe the bot is no longer a member of that chat**' , Direct[0])
+                                         
+
 
                                 else : 
-                                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
-                                    self.SendMessage('The Group username that you provided is no longer valid ❌\n**Maybe the bot is no longer a member of that chat**' , Direct[0])
-                                     
-
+                                    self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
 
                             else : 
-                                self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
+                                self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
+                                self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , InstaUserId)
 
                         else : 
-                            self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
-                            InstaUserId = Find.InstaUserId(Direct[0])
-                            self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , InstaUserId)
+                            self.SendMessage('Your Account is banned' , Direct[0])
+                            self.Page.SendMessage('Your Account is banned' , InstaUserId )
                                
                
                 # Check Pendings 
