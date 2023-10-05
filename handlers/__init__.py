@@ -90,3 +90,9 @@ def AddGroupFa()  :
             }
     
     return Messages
+
+def BanEn() : 
+    return 'Your account is Banned 🚫'  
+            
+def BanFa() : 
+    return 'اکانت شما بن شده است 🚫'
