@@ -5,6 +5,7 @@ def MessagesEn() :
         'JoinWarning' : "You Can't Access the bot until you joined the Sponsors Channel 🚷" , 
         'BanWarning' : 'Your Account is BANNED 🚷' , 
     }
+    return Messages
 
 
 def MessagesFa() : 
@@ -14,3 +15,4 @@ def MessagesFa() :
         'JoinWarning' : "🚷 شما نمیتوانید به بات دسترسی داشته باشید تا وقتی که در چنل های اسپانسر عضو نباشید " , 
         'BanWarning' : '🚷 اکانت شما بن شده است ' , 
     }
+    return Messages
