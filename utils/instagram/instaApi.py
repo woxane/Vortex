@@ -76,8 +76,6 @@ class InstagramAPI :
                     yield (TelUserId , StoryUrl , '')
 
 
-                self.SendMessage('Done !' , Message.user_id)
-
             else : 
                 self.SendMessage('Your Account is not Activated !!' , Message.user_id)
 
