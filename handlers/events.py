@@ -129,10 +129,10 @@ async def Activate(event) :
 
 @Client.on(events.NewMessage(pattern = '/feedback' , func = lambda event : Check.Access(event.message.chat_id)))
 async def Feedback(event) : 
-    if Check.Language == 'en' : 
+    if Check.Language(event.message.chat_id) == 'en' : 
         Messages = FeedbackEn(event.message.chat_id)
     
-    elif Check.Language == 'fa' : 
+    elif Check.Language(event.message.chat_id) == 'fa' : 
         Messages = FeedbackFa(event.message.chat_id)
 
     Message = await GetReply(Messages['Feedback'] , event.message.chat_id) 
