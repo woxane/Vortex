@@ -13,6 +13,7 @@ from utils.instagram import instaApi , Find
 from utils.general import Config , ValidationCheck , Flag
 from handlers import events
 from instagrapi.exceptions import LoginRequired
+from core.__init__ import *
 
 class Main :
 
@@ -43,6 +44,12 @@ class Main :
                 # Check that Directs won't be empty
                 if Directs :  
                     for Direct in Directs : 
+                        
+                        if Check.Language(Direct[0]) == 'en' : 
+                            Messages = MessagesEn()
+                        elif Check.Language(Direct[0]) == 'fa' : 
+                            Messages = MessagesFa()
+
                         InstaUserId = Find.InstaUserId(Direct[0])
                         # Direct[1] is Url , Shema of Direct : (id , url , caption) q
                         if Check.Access(Direct[0])  :
@@ -50,13 +57,13 @@ class Main :
                                 TelegramGroupId = TelegramFind.Groups(Direct[0]) 
                                 if TelegramGroupId : 
                                     if Check.BotMembership(self.TelBot.Client , TelegramGroupId) : 
-                                        self.Page.SendMessage('Done !' , InstaUserId)
+                                        self.Page.SendMessage(Messages['Done'] , InstaUserId)
                                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
                                         self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
 
                                     else : 
                                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
-                                        self.SendMessage('The Group username that you provided is no longer valid ❌\n**Maybe the bot is no longer a member of that chat**' , Direct[0])
+                                        self.SendMessage(Messages['GroupWarning'] , Direct[0])
                                          
 
 
@@ -64,12 +71,12 @@ class Main :
                                     self.SendMedia(Direct[1] ,Direct[0] , Direct[2])
 
                             else : 
-                                self.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , Direct[0])
-                                self.Page.SendMessage("You Can't Access the bot until you joined the Sponsors Channel" , InstaUserId)
+                                self.SendMessage(Messages['JoinWarning'] , Direct[0])
+                                self.Page.SendMessage(Messages['JoinWarning'] , InstaUserId)
 
                         else : 
-                            self.SendMessage('Your Account is banned' , Direct[0])
-                            self.Page.SendMessage('Your Account is banned' , InstaUserId )
+                            self.SendMessage(Messages['BanWarning'] , Direct[0])
+                            self.Page.SendMessage(Messages['BanWarning'] , InstaUserId )
                                
                
                 # Check Pendings 
