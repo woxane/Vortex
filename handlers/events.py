@@ -60,10 +60,10 @@ async def GetReply(Message , TelUserId) :
 
 
 async def BanWarning(event) : 
-    if Check.Language() == 'en' : 
+    if Check.Language(event.message.chat_id) == 'en' : 
         Message = BanEn()
 
-    elif Check.Language() == 'fa' : 
+    elif Check.Language(event.message.chat_id) == 'fa' : 
         Message = BanFa() 
 
     await event.respond(Message)
