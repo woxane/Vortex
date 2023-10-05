@@ -57,9 +57,9 @@ class Main :
                                 TelegramGroupId = TelegramFind.Groups(Direct[0]) 
                                 if TelegramGroupId : 
                                     if Check.BotMembership(self.TelBot.Client , TelegramGroupId) : 
-                                        self.Page.SendMessage(Messages['Done'] , InstaUserId)
                                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
                                         self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
+                                        self.Page.SendMessage(Messages['Done'] , InstaUserId)
 
                                     else : 
                                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
