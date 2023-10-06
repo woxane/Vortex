@@ -45,3 +45,9 @@ def Groups(TelUserId) :
         return int(Group[0])
 
     return Group
+
+async def Username(Client , TelUserId) : 
+    UserEntity = await Client.get_entity(TelUserId)
+
+    return UserEntity.username
+
