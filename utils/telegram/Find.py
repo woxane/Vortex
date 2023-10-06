@@ -46,12 +46,12 @@ def Groups(TelUserId) :
 
     return Group
 
-async def Username(Client , TelUserId) : 
-    UserEntity = await Client.get_entity(TelUserId)
+def Username(Client , TelUserId) : 
+    UserEntity = Client.get_entity(TelUserId)
 
     return UserEntity.username
 
-async def Name(Client, TelUserId) : 
-    UserEntity = await Client.get_entity(TelUserId)
+def Name(Client, TelUserId) : 
+    UserEntity = Client.get_entity(TelUserId)
 
     return UserEntity.first_name
