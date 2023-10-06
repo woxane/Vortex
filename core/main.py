@@ -57,8 +57,12 @@ class Main :
                                 TelegramGroupId = TelegramFind.Groups(Direct[0]) 
                                 if TelegramGroupId : 
                                     if Check.BotMembership(self.TelBot.Client , TelegramGroupId) : 
+                                        SenderUsername = TelegramFind.Username(self.TelBot.Client , Direct[0])
+                                        SenderName = TelegramFind.Name(self.TelBot.Client , Direct[0])
+                                        Caption = Direct[2] + f'**\n\n{Messages["GroupSender"]} [{SenderName}](https://t.me/{SenderUsername})**'
+
                                         self.SendMedia(Direct[1] ,Direct[0] , Direct[2]) 
-                                        self.SendMedia(Direct[1] , TelegramGroupId , Direct[2])
+                                        self.SendMedia(Direct[1] , TelegramGroupId , Caption)
                                         self.Page.SendMessage(Messages['Done'] , InstaUserId)
 
                                     else : 
