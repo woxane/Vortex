@@ -51,3 +51,7 @@ async def Username(Client , TelUserId) :
 
     return UserEntity.username
 
+async def Name(Client, TelUserId) : 
+    UserEntity = await Client.get_entity(TelUserId)
+
+    return UserEntity.first_name
