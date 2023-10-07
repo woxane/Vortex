@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 class Bot : 
 
-    def __init__(self , Proxy) : 
+    def __init__(self , Proxy = None) : 
         # Using ./.env File
         load_dotenv()
             
