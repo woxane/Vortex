@@ -15,7 +15,8 @@ def Check(Flags) :
     elif Flag == '-P' :
         try : 
             Proxy_ = Flags[2]
-            Proxy.Check(Proxy_) 
+            return Proxy.Check(Proxy_) 
 
         except : 
             print("There isn't any input for proxy ")
+            exit()
