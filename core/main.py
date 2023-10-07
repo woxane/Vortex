@@ -32,7 +32,7 @@ class Main :
         
         self.TelBot = client.Bot(Proxy)
         
-        EventsThread = threading.Thread(target=EventsHandler)
+        EventsThread = threading.Thread(target=EventsHandler , args = (Proxy))
         EventsThread.daemon = True
         EventsThread.start()
 
@@ -135,11 +135,11 @@ def ConfigCheck() :
         Config.CreateEnv('../.env')
 
 
-def EventsHandler() : 
+def EventsHandler(Proxy = None) : 
     Loop = asyncio.new_event_loop()
     asyncio.set_event_loop(Loop)
 
-    events.RunBot()
+    events.RunBot(Proxy)
 
 if __name__ == '__main__' : 
     MainClass = Main()
