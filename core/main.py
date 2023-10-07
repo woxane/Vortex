@@ -24,7 +24,7 @@ class Main :
         ConfigCheck() 
         
         if len(argv) > 1 :
-            Flag.Check(argv[1])  
+            Flag.Check(argv)  
 
         self.Page = instaApi.InstagramAPI()
         
