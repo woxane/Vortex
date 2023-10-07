@@ -2,7 +2,7 @@ from telethon.sync import TelegramClient , events
 import logging
 import os 
 from dotenv import load_dotenv
-
+import socks
 
 class Bot : 
 
@@ -12,8 +12,10 @@ class Bot :
             
         # os.getenv ouput is passing string var /
         # so for ApiId we must to convert it to integer
-        if Proxy : 
-            self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') , connection = Proxy)
+        if Proxy :
+            _ , addr , port = Proxy.split(':') 
+            Proxy_ = (socks.HTTP , addr , int(port))
+            self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') , proxy = Proxy_)
         
         else : 
             self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash'))
