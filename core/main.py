@@ -23,12 +23,14 @@ class Main :
 
         ConfigCheck() 
         
+        Proxy = None
         if len(argv) > 1 :
-            Flag.Check(argv)  
+            if Flag.Check(argv)  :
+                Proxy = argv[2]
 
         self.Page = instaApi.InstagramAPI()
         
-        self.TelBot = client.Bot()
+        self.TelBot = client.Bot(Proxy)
         
         EventsThread = threading.Thread(target=EventsHandler)
         EventsThread.daemon = True
