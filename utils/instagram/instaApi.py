@@ -8,10 +8,11 @@ from utils.instagram import (
         )
 from utils.instagram.__init__ import *
 from utils.telegram.Check import Language
+from requests import Session
 
 class InstagramAPI :
 
-    def __init__(self) : 
+    def __init__(self , Proxy = None) : 
 
         ## Initialize Arrays
         self.Username = os.getenv('InstaUsername')
@@ -21,10 +22,14 @@ class InstagramAPI :
         # 0 means Login with dump.json
         self.LoginStatus = None
 
-        self.Login()
+        self.Login(Proxy)
 
-    def Login(self) : 
-        self.User = Client() 
+    def Login(self , Proxy = None) : 
+        self.User = Client()
+        if Proxy : 
+            Session_ = Session()
+            Session_.proxies = Proxy
+            self.User.session = Session_
 
         if os.path.exists('../database/dump.json') : 
             self.User.load_settings('../database/dump.json') 
