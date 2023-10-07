@@ -28,7 +28,7 @@ class Main :
             if Flag.Check(argv)  :
                 Proxy = argv[2]
 
-        self.Page = instaApi.InstagramAPI()
+        self.Page = instaApi.InstagramAPI(Proxy)
         
         self.TelBot = client.Bot(Proxy)
         
