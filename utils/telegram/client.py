@@ -6,14 +6,17 @@ from dotenv import load_dotenv
 
 class Bot : 
 
-    def __init__(self) : 
+    def __init__(self , Proxy) : 
         # Using ./.env File
         load_dotenv()
             
         # os.getenv ouput is passing string var /
         # so for ApiId we must to convert it to integer
-        self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
-
+        if Proxy : 
+            self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') , connection = Proxy)
+        
+        else : 
+            self.Client = TelegramClient('.data' , int(os.getenv('ApiId')) , os.getenv('ApiHash'))
 
         logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                             level=logging.WARNING)
