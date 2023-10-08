@@ -11,7 +11,7 @@ from utils.telegram import client , Check
 from utils.telegram import Find as TelegramFind
 from utils.instagram import instaApi , Find
 from utils.general import Config , ValidationCheck , Flag
-from handlers import events
+import  handlers
 from instagrapi.exceptions import LoginRequired
 from core.__init__ import *
 
@@ -139,7 +139,7 @@ def EventsHandler(Proxy = None) :
     Loop = asyncio.new_event_loop()
     asyncio.set_event_loop(Loop)
 
-    events.RunBot(Proxy)
+    handlers.events.RunBot(Proxy)
 
 if __name__ == '__main__' : 
     MainClass = Main()
