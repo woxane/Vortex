@@ -17,6 +17,6 @@ def Check(Flags) :
             Proxy_ = Flags[2]
             return Proxy.Check(Proxy_) 
 
-        except : 
+        except Exception as Excep : 
             print("There isn't any input for proxy ")
             exit()
