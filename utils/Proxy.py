@@ -10,10 +10,11 @@ def Check(Proxy) :
             'http' : Proxy , 
             'https' :  Proxy
             }
-    try : 
-        Response = requests.get('http://www.google.com' , proxies = Proxies , timeout = 10)
 
-    except : 
+    try : 
+        Response = requests.get('http://www.google.com' , proxies = Proxies )
+
+    except Exception as Excep : 
         print('your proxy is failed . ')
         print('exiting ... ')
         exit()
