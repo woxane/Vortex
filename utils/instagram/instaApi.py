@@ -28,7 +28,7 @@ class InstagramAPI :
         self.User = Client()
         if Proxy : 
             Session_ = Session()
-            Session_.proxies = Proxy
+            Session_.proxies = {'http' : Proxy , 'https' : Proxy}
             self.User.session = Session_
 
         if os.path.exists('../database/dump.json') : 
