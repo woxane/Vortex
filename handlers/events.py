@@ -25,6 +25,9 @@ load_dotenv()
 Connection = sqlite3.connect('../database/Vortex.db' , isolation_level = None , check_same_thread = False )
 Cursor = Connection.cursor()
 
+Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash'))
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                level=logging.WARNING) 
 
 def AuthKeyCreator(TelUserId) : 
     Cursor.execute(f'select AuthKey from Info where TelUserId = {TelUserId}')
@@ -356,15 +359,12 @@ async def InlineRemove(event) :
 def RunBot(Proxy = None) :
     # os.getenv output is passing string var / 
     # so for ApiId we must to convert it to integer
+    global Client 
     if Proxy : 
         _ , addr , port = Proxy.split(':') 
         Proxy_ = (socks.HTTP , addr[2:] , int(port))
         Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') , Proxy = Proxy_ )
-    else :
-        Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
 
-    logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING) 
     Client.start(bot_token = os.getenv('Token'))
     print('Successfully Connected !')
     Client.run_until_disconnected()
