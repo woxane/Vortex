@@ -358,7 +358,7 @@ def RunBot(Proxy = None) :
     # so for ApiId we must to convert it to integer
     if Proxy : 
         _ , addr , port = Proxy.split(':') 
-        Proxy_ = (socks.HTTP , addr , int(port))
+        Proxy_ = (socks.HTTP , addr[2:] , int(port))
         Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') , Proxy = Proxy_ )
     else :
         Client = TelegramClient('data' , int(os.getenv('ApiId')) , os.getenv('ApiHash') )
