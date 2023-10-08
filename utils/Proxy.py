@@ -7,12 +7,13 @@ def Check(Proxy) :
         print("The structure of proxy isn't correct .\nThe correct way : http(s)://exmaple:example")
         exit()
     Proxies = {
-            'http' : 'http://' + Proxy , 
-            'https' : 'https://' + Proxy
+            'http' : Proxy , 
+            'https' :  Proxy
             }
+    try : 
+        Response = requests.get('http://www.google.com' , proxies = Proxies , timeout = 10)
 
-    Response = requests.get('http://www.google.com' , proxies = Proxies , timeout = 10)
-    if Response.status_code == 200 : 
-        return True
-
-    return False
+    except : 
+        print('your proxy is failed . ')
+        print('exiting ... ')
+        exit()
