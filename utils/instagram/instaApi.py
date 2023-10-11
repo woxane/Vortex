@@ -65,14 +65,17 @@ class InstagramAPI :
                     VideoPk = self.User.media_pk_from_url(VideoUrl)
                     VideoInfo = self.User.media_info(VideoPk)
                     Caption = VideoInfo.caption_text
-                    for Slide in VideoInfo.resources : 
-                        # If the slide is photo 
-                        Type = Slide.media_type 
-                        if Type == 1 :  
-                            yield (TelUserId , ''.join(Slide.thumbnail_url),  Caption)
+                    if VideoInfo.resources : 
+                        for Slide in VideoInfo.resources : 
+                            # If the slide is photo 
+                            Type = Slide.media_type 
+                            if Type == 1 :  
+                                yield (TelUserId , ''.join(Slide.thumbnail_url),  Caption)
 
-                        elif Type == 2 : 
-                            yield (TelUserId , ''.join(Slide.video_url) , Caption) 
+                            elif Type == 2 : 
+                                yield (TelUserId , ''.join(Slide.video_url) , Caption) 
+                    else : 
+                        yield (TelUserId , ''.join(VideoInfo.thumbnail_url) , Caption)
 
 
                 #XXX THIS ABOVE CODE WON'T WORK ON NORMAL INSTAGRAPI LIBRARY
